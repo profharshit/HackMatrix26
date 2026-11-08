@@ -1,0 +1,258 @@
+openapi: 3.0.3
+info:
+  title: Web Threat Detection & Digital Trust API
+  version: 0.1.0
+  description: Passive-only website trust scanner. Returns a Digital Trust Score (0-100) with an explainable breakdown.
+
+servers:
+  - url: http://localhost:8000
+    description: FastAPI (direct)
+  - url: http://localhost:4000
+    description: Node gateway (optional)
+
+paths:
+  # Main feature: scan a URL and get a trust score
+  /api/scan:
+    post:
+      summary: Scan a URL
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [url]
+              properties:
+                url:
+                  type: string
+                  example: https://example.com/login
+      responses:
+        "200":
+          description: Scan finished
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ScanResult"
+        "422":
+          $ref: "#/components/responses/BadRequest"
+
+  # Lets the frontend re-open a past scan without scanning again
+  /api/scan/{id}:
+    get:
+      summary: Get a saved scan result
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Saved scan
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ScanResult"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  # Crowd-sourced reports feed the threat-intel score
+  /api/report:
+    post:
+      summary: Report a suspicious site
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [url, category]
+              properties:
+                url:
+                  type: string
+                category:
+                  type: string
+                  enum: [phishing, malware, scam, fake_recruitment, other]
+                comment:
+                  type: string
+                  example: Asked for my bank password
+      responses:
+        "201":
+          description: Report saved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  report_id:
+                    type: integer
+                  message:
+                    type: string
+        "422":
+          $ref: "#/components/responses/BadRequest"
+
+  # Community voting helps rank how trustworthy a report is
+  /api/vote:
+    post:
+      summary: Vote on a report
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [report_id, vote]
+              properties:
+                report_id:
+                  type: integer
+                vote:
+                  type: string
+                  enum: [up, down]
+      responses:
+        "200":
+          description: Vote counted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  report_id:
+                    type: integer
+                  upvotes:
+                    type: integer
+                  downvotes:
+                    type: integer
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  # Quick lookup of everything we know about one domain
+  /api/intel/{domain}:
+    get:
+      summary: Threat intel for a domain
+      parameters:
+        - name: domain
+          in: path
+          required: true
+          schema:
+            type: string
+            example: example.com
+      responses:
+        "200":
+          description: Intel summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ThreatIntel"
+
+components:
+  schemas:
+    ScanResult:
+      type: object
+      properties:
+        id:
+          type: string
+          example: a1b2c3
+        url:
+          type: string
+        trust_score:
+          type: integer
+          minimum: 0
+          maximum: 100
+          description: 100 = fully trusted, 0 = very dangerous
+        verdict:
+          type: string
+          enum: [safe, suspicious, dangerous]
+        breakdown:
+          type: object
+          properties:
+            model:
+              $ref: "#/components/schemas/ModelResult"
+            certificate:
+              $ref: "#/components/schemas/ModuleResult"
+            web_security:
+              $ref: "#/components/schemas/ModuleResult"
+            threat_intel:
+              $ref: "#/components/schemas/ThreatIntel"
+        reasons:
+          type: array
+          items:
+            type: string
+          example:
+            - Certificate expires in 4 days
+            - Domain age 3 days
+        scanned_at:
+          type: string
+          format: date-time
+
+    # Shared shape for certificate and web_security modules
+    ModuleResult:
+      type: object
+      properties:
+        score:
+          type: integer
+          nullable: true
+          description: null when the module failed or timed out
+        issues:
+          type: array
+          items:
+            type: string
+        details:
+          type: object
+          additionalProperties: true
+        error:
+          type: string
+          description: Only present when the module failed
+
+    ModelResult:
+      type: object
+      properties:
+        score:
+          type: integer
+          nullable: true
+        label:
+          type: string
+          example: phishing
+        confidence:
+          type: number
+          format: float
+          example: 0.91
+        error:
+          type: string
+
+    ThreatIntel:
+      type: object
+      properties:
+        score:
+          type: integer
+          nullable: true
+        reports:
+          type: integer
+        feeds_hit:
+          type: array
+          items:
+            type: string
+        details:
+          type: object
+          additionalProperties: true
+        error:
+          type: string
+
+    Error:
+      type: object
+      properties:
+        detail:
+          type: string
+
+  responses:
+    BadRequest:
+      description: Invalid input
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
