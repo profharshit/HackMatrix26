@@ -216,6 +216,10 @@ components:
           type: number
           format: float
           example: 0.91
+        source:
+          type: string
+          enum: [model, heuristic]
+          description: heuristic means the backup rules were used (model file missing or broken)
         error:
           type: string
 
