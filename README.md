@@ -69,6 +69,27 @@ Invoke-RestMethod -Method Post -Uri http://127.0.0.1:8000/api/scan `
 
 Stop the server with `Ctrl+C`.
 
+## ThreatWho AI (Frontend)
+
+Minimalist editorial web application built with JavaScript (React + Vite + Tailwind CSS) following the HackMatrix '26 specifications:
+- **Base Palette**: Solid white, warm paper grey (`#faf9f6`), and deep navy blue (`#0f172a`).
+- **Strictly No Gradients**: Solid surfaces, crisp borders, and high-contrast typography.
+- **Drawer Architecture**: Collapsible `MENU ☰` navigation drawer plus slide-out Diagnostic Forensic Inspector drawer.
+- **Guest Access**: 100% accessible to guests without mandatory login; optional login modal with 1-click test personas for evaluation.
+- **eMudhra Incident Audit**: Dedicated cryptographic analysis covering Certificate Authority key generation vulnerabilities and Certificate Transparency.
+
+### Run Frontend in Development
+
+```powershell
+cd frontend
+npm install
+npm run dev
+```
+
+Open your browser at: **`http://localhost:5173`**
+
+---
+
 ## Adding the ML model
 
 1. Copy the file to `backend/app/models/model.joblib`.
