@@ -1,7 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.routers import scan
+
 app = FastAPI(title="Web Threat Detection API", version="0.1.0")
+app.include_router(scan.router)
 
 # Allow the React dev servers to call this API from the browser
 app.add_middleware(
