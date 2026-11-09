@@ -30,8 +30,8 @@ export default function TopHeader({
 
         {/* Right Section: Guest Access Status & Auth + Finder Video + MENU */}
         <div className="flex items-stretch divide-x divide-navy-900">
-          {/* Guest Access Status & Auth Pill */}
-          <div className="hidden sm:flex items-center px-4 md:px-6 gap-3">
+          {/* Guest Access Status */}
+          <div className="hidden sm:flex items-center px-4 md:px-6">
             {isGuest ? (
               <div className="flex items-center gap-1.5 text-[11px] text-grey-700">
                 <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
@@ -48,17 +48,17 @@ export default function TopHeader({
                 <span className="font-bold truncate text-[10px]">{user.name}</span>
               </div>
             )}
+          </div>
 
+          {/* Action Area: Sign In Button + Report Threat Video + MENU Drawer Trigger */}
+          <div className="flex items-center px-3 md:px-4 gap-2.5 sm:gap-3">
             <button
               onClick={openAuth}
-              className="text-[10px] font-bold uppercase underline hover:text-navy-700 transition-colors ml-1"
+              className="text-[10px] sm:text-[11px] font-bold uppercase underline hover:text-navy-700 transition-colors"
             >
               {isGuest ? 'Sign in' : 'Profile'}
             </button>
-          </div>
 
-          {/* Report Threat Video Button & MENU Drawer Trigger */}
-          <div className="flex items-center px-3 md:px-4 gap-2.5">
             <button
               onClick={onOpenReportModal}
               className="flex items-center justify-center p-0.5 hover:scale-105 active:scale-95 transition-transform"
