@@ -26,7 +26,7 @@ export default function ReportForm() {
   const input = 'w-full rounded-2xl border border-[#22396F] bg-[#111215] px-5 py-3.5 outline-none text-bone placeholder:text-slate-muted focus:border-accent transition-colors';
 
   return (
-    <section id="report" className="border-t border-[#22396F] bg-[#0D1C42]/50 py-28 md:py-36">
+    <section id="report" className="relative overflow-hidden bg-gradient-to-b from-[#17181c] via-[#0D1C42]/35 to-[#17181c] py-28 md:py-36">
       <div className="container-x grid gap-14 lg:grid-cols-2">
         <Reveal>
           <div className="flex items-center gap-3">

@@ -68,7 +68,15 @@ export default function TopologyBackground({
     <div
       ref={vantaRef}
       className={`relative w-full overflow-hidden ${className}`}
+      style={{
+        maskImage: 'linear-gradient(to bottom, black 82%, transparent 100%)',
+        WebkitMaskImage: 'linear-gradient(to bottom, black 82%, transparent 100%)',
+      }}
     >
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#17181c] via-[#17181c]/70 to-transparent z-[1] backdrop-blur-[2px]"
+      />
       {children}
     </div>
   );

@@ -56,8 +56,8 @@ const STATS = [
 
 export function Numbers() {
   return (
-    <section className="border-y border-[#22396F] bg-[#0D1C42]/60">
-      <div className="container-x grid grid-cols-2 gap-y-10 py-16 md:grid-cols-4">
+    <section className="relative overflow-hidden bg-gradient-to-b from-[#17181c] via-[#0D1C42]/45 to-[#17181c] py-16">
+      <div className="container-x grid grid-cols-2 gap-y-10 md:grid-cols-4">
         {STATS.map(([n, l], i) => (
           <Reveal key={l} delay={i * 80}>
             <div className="text-5xl font-semibold tracking-tight md:text-6xl text-bone">{n}</div>
@@ -189,7 +189,7 @@ const STEPS = [
 
 export function Steps() {
   return (
-    <section id="how" className="border-t border-[#22396F] bg-[#0D1C42]/40 py-28 md:py-36">
+    <section id="how" className="relative overflow-hidden bg-gradient-to-b from-[#17181c] via-[#0D1C42]/30 to-[#17181c] py-28 md:py-36">
       <div className="container-x">
         <Reveal>
           <p className="eyebrow">How it works</p>

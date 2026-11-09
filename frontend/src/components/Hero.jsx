@@ -31,7 +31,7 @@ export default function Hero() {
       <TopologyBackground
         color={0xefefef}
         backgroundColor={0x232e81}
-        className="pt-36 md:pt-44 pb-20 border-b border-[#22396F]/50"
+        className="pt-36 md:pt-44 pb-20"
       >
         {/* Soft dark vignettes to preserve contrast and smoothly transition into page */}
         <div
