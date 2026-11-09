@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import keyIcon from '../assets/key-icon.png';
+import certEmptyIcon from '../assets/certificate-empty.png';
 import {
   KeyRound,
   ShieldAlert,
@@ -48,8 +49,12 @@ export default function CertificateView({ activeScan }) {
 
       {!activeScan || !certData ? (
         <div className="bg-white border-2 border-navy-900 rounded-lg p-12 text-center space-y-4 shadow-brutal font-mono">
-          <div className="w-14 h-14 rounded-full border-2 border-navy-900 bg-white flex items-center justify-center p-2.5 mx-auto shadow-brutal-sm">
-            <img src={keyIcon} alt="Certificate Key" className="w-full h-full object-contain" />
+          <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto flex items-center justify-center">
+            <img
+              src={certEmptyIcon}
+              alt="No Certificate Audited"
+              className="w-full h-full object-contain"
+            />
           </div>
           <div>
             <h3 className="font-display font-bold text-lg text-navy-900 uppercase">
