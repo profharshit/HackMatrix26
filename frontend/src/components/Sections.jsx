@@ -3,6 +3,7 @@ import { Brain, Lock, ShieldAlert, Radar, Megaphone, Plus, Minus, ArrowRight, Ch
 import Reveal from './Reveal';
 import VideoIcon from './VideoIcon';
 import Button from './Button';
+import NetBackground from './NetBackground';
 
 /* ---------- Three layers ---------- */
 const LAYERS = [
@@ -307,16 +308,27 @@ export function Faq() {
 export function Cta() {
   return (
     <section className="container-x pb-24">
-      <Reveal className="relative overflow-hidden rounded-[2.5rem] border border-[#22396F] bg-gradient-to-br from-[#0D1C42] via-[#162754] to-[#22396F] p-10 text-bone shadow-[0_20px_70px_-15px_rgba(1,7,54,0.95)] md:p-20">
-        <div className="relative z-10">
-          <p className="eyebrow mb-4">Enterprise trust</p>
-          <h2 className="h-display max-w-3xl text-[clamp(2.2rem,6vw,5rem)] text-bone font-bold">Web trust, on autopilot.</h2>
-          <p className="mt-6 max-w-xl text-lg text-slate font-medium">Fast to try. Nothing to install. Built for the way real people browse.</p>
-          <div className="mt-10 flex flex-wrap gap-4">
-            <Button href="#scanner" variant="primary">Start a free scan</Button>
-            <Button href="#report" variant="ghost">Report a threat</Button>
+      <Reveal className="relative overflow-hidden rounded-[2.5rem] border border-[#22396F] shadow-[0_20px_70px_-15px_rgba(1,7,54,0.95)]">
+        <NetBackground
+          color={0xffffff}
+          backgroundColor={0x212740}
+          className="p-10 text-bone md:p-20"
+        >
+          {/* Subtle gradient vignette to ensure high contrast */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#111215]/85 via-[#212740]/60 to-transparent z-[1]"
+          />
+          <div className="relative z-10">
+            <p className="eyebrow mb-4">Enterprise trust</p>
+            <h2 className="h-display max-w-3xl text-[clamp(2.2rem,6vw,5rem)] text-bone font-bold">Web trust, on autopilot.</h2>
+            <p className="mt-6 max-w-xl text-lg text-slate font-medium">Fast to try. Nothing to install. Built for the way real people browse.</p>
+            <div className="mt-10 flex flex-wrap gap-4">
+              <Button href="#scanner" variant="primary">Start a free scan</Button>
+              <Button href="#report" variant="ghost">Report a threat</Button>
+            </div>
           </div>
-        </div>
+        </NetBackground>
       </Reveal>
     </section>
   );
