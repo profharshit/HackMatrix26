@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import keyIcon from '../assets/key-icon.png';
+import keyVideo from '../assets/key.mp4';
 import certEmptyIcon from '../assets/certificate-empty.png';
 import {
   KeyRound,
@@ -26,7 +26,14 @@ export default function CertificateView({ activeScan }) {
       <div className="bg-white border-2 border-navy-900 rounded-lg p-6 shadow-brutal">
         <div className="flex flex-col sm:flex-row items-start gap-4">
           <div className="w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center flex-shrink-0">
-            <img src={keyIcon} alt="Certificate Key" className="w-full h-full object-contain" />
+            <video
+              src={keyVideo}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-contain pointer-events-none"
+            />
           </div>
           <div className="space-y-1">
             <div className="flex flex-wrap items-center gap-2">
