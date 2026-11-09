@@ -5,6 +5,7 @@ import VideoIcon from './VideoIcon';
 import Button from './Button';
 import NetBackground from './NetBackground';
 import DotsBackground from './DotsBackground';
+import BirdsBackground from './BirdsBackground';
 
 /* ---------- Three layers ---------- */
 const LAYERS = [
@@ -27,21 +28,30 @@ const LAYERS = [
 
 export function Layers() {
   return (
-    <section className="container-x py-28 md:py-40">
-      <Reveal>
-        <h2 className="h-display max-w-4xl text-[clamp(2.2rem,6vw,5rem)] text-bone">
-          Web trust needed <span className="text-accent">a brain.</span> We built it.
-        </h2>
-      </Reveal>
-      <div className="mt-16 grid gap-5 md:grid-cols-3">
-        {LAYERS.map((l, i) => (
-          <Reveal key={l.tag} delay={i * 100} className="card flex flex-col p-8 md:p-9 border-[#22396F] bg-ink-800 hover:border-accent transition-all">
-            <span className="eyebrow">{l.tag}</span>
-            <h3 className="mt-6 text-2xl font-semibold leading-tight tracking-tight text-bone">{l.title}</h3>
-            <p className="mt-4 leading-relaxed text-slate">{l.body}</p>
+    <section className="relative overflow-hidden">
+      <BirdsBackground
+        color1={0xd9d9d9}
+        color2={0x22396F}
+        backgroundColor={0x17181c}
+        className="py-28 md:py-36"
+      >
+        <div className="container-x relative z-10">
+          <Reveal>
+            <h2 className="h-display max-w-4xl text-[clamp(2.2rem,6vw,5rem)] text-bone">
+              Web trust needed <span className="text-accent">a brain.</span> We built it.
+            </h2>
           </Reveal>
-        ))}
-      </div>
+          <div className="mt-16 grid gap-5 md:grid-cols-3">
+            {LAYERS.map((l, i) => (
+              <Reveal key={l.tag} delay={i * 100} className="card flex flex-col p-8 md:p-9 border-[#22396F] bg-ink-800/85 backdrop-blur-md hover:border-accent transition-all">
+                <span className="eyebrow">{l.tag}</span>
+                <h3 className="mt-6 text-2xl font-semibold leading-tight tracking-tight text-bone">{l.title}</h3>
+                <p className="mt-4 leading-relaxed text-slate">{l.body}</p>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </BirdsBackground>
     </section>
   );
 }
