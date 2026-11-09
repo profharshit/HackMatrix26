@@ -1,4 +1,5 @@
 import React from 'react';
+import finderVideo from '../assets/finder.mp4';
 import { ShieldCheck, Menu, UserCheck, LogIn, User, Sparkles, AlertTriangle } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
@@ -79,11 +80,18 @@ export default function TopHeader({
         <div className="col-span-7 sm:col-span-4 md:col-span-4 lg:col-span-2 flex items-center justify-end px-3 md:px-4 gap-2">
           <button
             onClick={onOpenReportModal}
-            className="hidden sm:flex items-center gap-1 px-2.5 py-1 text-[11px] font-bold bg-[#ffeedb] text-navy-900 border border-navy-900 rounded hover:shadow-brutal-sm transition-all"
+            className="flex items-center justify-center p-0.5 hover:scale-105 active:scale-95 transition-transform"
             title="Report Threat URL"
+            aria-label="Report Threat URL"
           >
-            <AlertTriangle className="w-3 h-3 text-red-600" />
-            <span>REPORT</span>
+            <video
+              src={finderVideo}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 object-contain rounded pointer-events-none"
+            />
           </button>
 
           {/* Editorial Pill MENU Button matching Image 1 ("MENU ☰") */}
