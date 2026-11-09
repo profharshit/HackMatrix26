@@ -18,10 +18,6 @@ export default function AuthModal() {
     login(email, role, name || email.split('@')[0]);
   };
 
-  const handleQuickLogin = (demoEmail, demoRole, demoName) => {
-    login(demoEmail, demoRole, demoName);
-  };
-
   return (
     <div className="fixed inset-0 z-50 overflow-hidden flex items-center justify-center p-4 font-sans">
       {/* Backdrop */}
@@ -188,31 +184,6 @@ export default function AuthModal() {
                   <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               </form>
-
-              {/* Quick Persona Logins */}
-              <div className="mt-5 pt-4 border-t border-navy-900/15">
-                <span className="text-[10px] font-bold text-grey-500 uppercase block mb-2">
-                  1-Click Demo Evaluation Personas:
-                </span>
-                <div className="grid grid-cols-2 gap-2">
-                  <button
-                    type="button"
-                    onClick={() => handleQuickLogin('alex.chen@cyberdef.org', 'Lead Threat Analyst', 'Alex Chen')}
-                    className="p-2 border border-navy-900 rounded bg-white hover:bg-[#fef3c7] text-left transition-colors shadow-brutal-sm"
-                  >
-                    <span className="font-bold text-navy-900 block text-xs">Alex Chen</span>
-                    <span className="text-[9px] text-grey-500 block">Threat Analyst</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleQuickLogin('sarah.v@trustchain.net', 'PKI & CA Auditor', 'Sarah Vance')}
-                    className="p-2 border border-navy-900 rounded bg-white hover:bg-[#fef3c7] text-left transition-colors shadow-brutal-sm"
-                  >
-                    <span className="font-bold text-navy-900 block text-xs">Sarah Vance</span>
-                    <span className="text-[9px] text-grey-500 block">CA Auditor</span>
-                  </button>
-                </div>
-              </div>
 
               {/* Guest dismissal */}
               <div className="mt-4 text-center">
