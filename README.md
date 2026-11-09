@@ -144,6 +144,27 @@ Categories: `phishing`, `fake_payment`, `fake_recruitment`, `impersonation`, `ma
 - Domains are stored lowercase without `www.` or a trailing dot. Anything that looks up the database (including `get_threat_intel`) must clean the domain the same way.
 - Voters are stored as a one-way hash of the IP, never the IP itself.
 
+## ThreatWho AI (Frontend)
+
+Minimalist editorial web application built with JavaScript (React + Vite + Tailwind CSS) following the HackMatrix '26 specifications:
+- **Base Palette**: Solid white, warm paper grey (`#faf9f6`), and deep navy blue (`#0f172a`).
+- **Strictly No Gradients**: Solid surfaces, crisp borders, and high-contrast typography.
+- **Drawer Architecture**: Collapsible `MENU ☰` navigation drawer plus slide-out Diagnostic Forensic Inspector drawer.
+- **Guest Access**: 100% accessible to guests without mandatory login; optional login modal with 1-click test personas for evaluation.
+- **eMudhra Incident Audit**: Dedicated cryptographic analysis covering Certificate Authority key generation vulnerabilities and Certificate Transparency.
+
+### Run Frontend in Development
+
+```powershell
+cd frontend
+npm install
+npm run dev
+```
+
+Open your browser at: **`http://localhost:5173`**
+
+---
+
 ## Adding the ML model
 
 1. Copy the file to `backend/app/models/model.joblib`.
