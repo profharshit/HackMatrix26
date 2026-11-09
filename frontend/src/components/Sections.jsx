@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Brain, Lock, ShieldAlert, Radar, Megaphone, Plus, Minus, ArrowRight, Check } from 'lucide-react';
 import Reveal from './Reveal';
 import VideoIcon from './VideoIcon';
+import Button from './Button';
 
 /* ---------- Three layers ---------- */
 const LAYERS = [
@@ -311,9 +312,9 @@ export function Cta() {
           <p className="eyebrow mb-4">Enterprise trust</p>
           <h2 className="h-display max-w-3xl text-[clamp(2.2rem,6vw,5rem)] text-bone font-bold">Web trust, on autopilot.</h2>
           <p className="mt-6 max-w-xl text-lg text-slate font-medium">Fast to try. Nothing to install. Built for the way real people browse.</p>
-          <div className="mt-10 flex flex-wrap gap-3">
-            <a href="#scanner" className="btn bg-accent px-6 py-3.5 text-base text-[#17181c] font-bold hover:bg-white hover:text-[#17181c] shadow-[0_0_24px_-4px_rgba(252,241,208,0.4)] transition-all">Start a free scan</a>
-            <a href="#report" className="btn border border-[#22396F] px-6 py-3.5 text-base text-bone font-semibold hover:border-accent hover:text-accent transition-all">Report a threat</a>
+          <div className="mt-10 flex flex-wrap gap-4">
+            <Button href="#scanner" variant="primary">Start a free scan</Button>
+            <Button href="#report" variant="ghost">Report a threat</Button>
           </div>
         </div>
       </Reveal>

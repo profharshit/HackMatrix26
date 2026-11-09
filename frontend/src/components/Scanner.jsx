@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Search, Loader2, History, Globe } from 'lucide-react';
 import Reveal from './Reveal';
 import VideoIcon from './VideoIcon';
+import Button from './Button';
 import { scanUrl, getDomainIntel, saveScanToHistory, getSavedScanHistory, clearScanHistory } from '../services/api';
 import { PRESET_TARGETS } from '../services/mockData';
 
@@ -150,9 +151,9 @@ export default function Scanner({ online }) {
                 className="w-full bg-transparent py-3 text-lg outline-none text-bone placeholder:text-slate-muted"
               />
             </div>
-            <button type="submit" disabled={loading || !url.trim()} className="btn-primary px-8 py-3.5 text-base disabled:opacity-40">
+            <Button type="submit" disabled={loading || !url.trim()} variant="primary" className="!px-8 !py-3.5 !text-base shrink-0">
               {loading ? <><Loader2 className="h-4 w-4 animate-spin" /> Scanning</> : 'Scan'}
-            </button>
+            </Button>
           </form>
 
           <div className="mt-4 flex flex-wrap gap-2">
@@ -175,7 +176,9 @@ export default function Scanner({ online }) {
             <form onSubmit={lookup} className="mt-6 flex gap-2">
               <input value={domain} onChange={(e) => setDomain(e.target.value)} placeholder="example.com" aria-label="Domain"
                 className="min-w-0 flex-1 rounded-full border border-[#22396F] bg-ink-950 px-5 py-3 outline-none focus:border-accent text-bone placeholder:text-slate-muted" />
-              <button className="btn-primary" disabled={intelLoading}>{intelLoading ? '…' : 'Look up'}</button>
+              <Button type="submit" variant="primary" className="!px-6 !py-3 shrink-0" disabled={intelLoading}>
+                {intelLoading ? '…' : 'Look up'}
+              </Button>
             </form>
             {intel && (
               <dl className="mt-6 grid grid-cols-2 gap-4 text-sm">

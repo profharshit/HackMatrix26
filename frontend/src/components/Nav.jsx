@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Menu, X, ShieldCheck } from 'lucide-react';
 import VideoIcon from './VideoIcon';
+import Button from './Button';
 
 const LINKS = [
   { href: '#platform', label: 'Platform' },
@@ -49,8 +50,8 @@ export default function Nav({ online }) {
             <span className={`h-2 w-2 rounded-full ${online ? 'bg-accent shadow-[0_0_8px_rgba(252,241,208,0.8)]' : 'bg-warn'}`} />
             {online ? 'API live' : 'Demo mode'}
           </span>
-          <a href="#report" className="btn-ghost">Report a threat</a>
-          <a href="#scanner" className="btn-primary">Free scan</a>
+          <Button href="#report" variant="ghost" className="!px-5 !py-2 !text-xs">Report a threat</Button>
+          <Button href="#scanner" variant="primary" className="!px-5 !py-2 !text-xs">Free scan</Button>
         </div>
 
         <button
@@ -71,8 +72,8 @@ export default function Nav({ online }) {
             </a>
           ))}
           <div className="mt-4 flex gap-3">
-            <a href="#scanner" onClick={() => setOpen(false)} className="btn-primary flex-1">Free scan</a>
-            <a href="#report" onClick={() => setOpen(false)} className="btn-ghost flex-1">Report</a>
+            <Button href="#scanner" onClick={() => setOpen(false)} variant="primary" className="flex-1 !px-4 !py-2.5">Free scan</Button>
+            <Button href="#report" onClick={() => setOpen(false)} variant="ghost" className="flex-1 !px-4 !py-2.5">Report</Button>
           </div>
         </div>
       )}

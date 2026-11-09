@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Reveal from './Reveal';
 import VideoIcon from './VideoIcon';
+import Button from './Button';
 import { submitThreatReport } from '../services/api';
 
 const CATEGORIES = ['Phishing', 'Fake Recruitment', 'Credential Harvesting', 'Malware', 'Certificate Anomaly', 'Other'];
@@ -48,7 +49,9 @@ export default function ReportForm() {
             </div>
             <textarea required rows={4} className={input} placeholder="What made it suspicious?" value={f.comment} onChange={set('comment')} aria-label="Comment" />
             <div className="flex items-center gap-4">
-              <button className="btn-primary px-7 py-3 text-base" disabled={state.busy}>{state.busy ? 'Submitting…' : 'Submit report'}</button>
+              <Button type="submit" variant="primary" disabled={state.busy} className="!px-8 !py-3.5 !text-base">
+                {state.busy ? 'Submitting…' : 'Submit report'}
+              </Button>
               {state.msg && <p role="status" className="text-sm text-slate">{state.msg}</p>}
             </div>
           </form>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import VideoIcon from './VideoIcon';
+import Button from './Button';
 
 function Ring({ value, size = 150, stroke = 12 }) {
   const r = (size - stroke) / 2;
@@ -54,11 +55,13 @@ export default function Hero() {
           ThreatWho is the intelligence layer for every link you click. It scans a URL passively and
           turns four independent checks into one explainable Digital Trust Score, in seconds.
         </p>
-        <div className="mt-10 flex flex-wrap gap-3">
-          <a href="#scanner" className="btn-primary px-6 py-3 text-base">
+        <div className="mt-10 flex flex-wrap gap-4">
+          <Button href="#scanner" variant="primary">
             Scan a URL <ArrowRight className="h-4 w-4" />
-          </a>
-          <a href="#platform" className="btn-ghost px-6 py-3 text-base">Explore the platform</a>
+          </Button>
+          <Button href="#platform" variant="ghost">
+            Explore the platform
+          </Button>
         </div>
 
         <div className="card relative mt-16 overflow-hidden p-5 shadow-[0_30px_100px_-20px_rgba(0,0,0,0.7)] border-[#22396F] bg-ink-800 md:mt-24 md:p-8">
