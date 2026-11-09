@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import worldwideVideo from '../assets/worldwide.mp4';
+import globalEducationVideo from '../assets/global-education.mp4';
 import {
   Globe2,
   Search,
@@ -121,7 +122,7 @@ export default function DomainLookupView({ onAnalyzeUrl }) {
         <div className="bg-white border-2 border-navy-900 rounded-lg p-12 text-center space-y-4 shadow-brutal font-mono">
           <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto flex items-center justify-center">
             <video
-              src={worldwideVideo}
+              src={globalEducationVideo}
               autoPlay
               loop
               muted
