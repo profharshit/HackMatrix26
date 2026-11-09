@@ -1,5 +1,8 @@
 from pathlib import Path
 
+# A "safe" verdict needs at least this many checks to have finished
+MIN_WORKING_MODULES_FOR_SAFE = 3
+
 # Every module gets the same time limit so one slow check cannot freeze the scan
 MODULE_TIMEOUT_SECONDS = 5
 

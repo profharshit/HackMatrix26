@@ -7,11 +7,13 @@ from sklearn.exceptions import InconsistentVersionWarning
 
 from app.config import MODEL_FILE_PATH
 from app.modules.url_features import extract_url_features
+from urllib.parse import urlsplit
 
 SUSPICIOUS_WORDS = ("login", "verify", "secure", "account", "update", "bank", "paypal")
 # PhiUSIIL dataset coding: 0 = phishing, 1 = legitimate. Set to 1 if your notebook flipped it.
 PHISHING_CLASS_LABEL = 0
 logger = logging.getLogger(__name__)
+modelState = {"isLoaded": False, "model": None}
 
 # Explains a scikit-learn version clash in words a beginner can act on
 def build_version_mismatch_message(warning):
@@ -113,23 +115,54 @@ def score_with_rules(url):
     trustScore = max(trustScore, 0)
     return {"score": trustScore, "label": pick_label(trustScore), "confidence": 0.5, "source": "heuristic"}
 
+# Stops the model from overriding obvious red flags like a raw IP over plain HTTP
+def apply_rule_ceiling(modelResult, url):
+    ruleResult = score_with_rules(url)
+    if ruleResult["score"] < modelResult["score"]:
+        modelResult["score"] = ruleResult["score"]
+        modelResult["label"] = pick_label(ruleResult["score"])
+    return modelResult
 
 # Returns None instead of raising, so the caller can switch to backup rules
 def try_model_prediction(url):
     try:
         model = get_model()
-        return score_with_model(model, url) if model is not None else None
+        return apply_rule_ceiling(score_with_model(model, url), url) if model is not None else None
     except Exception as error:
         logger.warning("Model prediction failed: %s - using backup rules.", error)
         return None
 
 
+KNOWN_BRANDS = ("microsoft", "paypal", "google", "amazon", "apple", "facebook", "netflix")
+LOOKALIKE_MAX_SCORE = 10
+
+
+# Reads look-alike letters back as the real ones, so "rnicrosoft" becomes "microsoft"
+def undo_lookalike_letters(host):
+    return host.replace("rn", "m").replace("vv", "w").replace("0", "o").replace("1", "l")
+
+
+# Catches fake brand domains that only imitate the real brand name
+def is_brand_lookalike(url):
+    host = urlsplit(url if "://" in url else "http://" + url).hostname or ""
+    cleanedHost = undo_lookalike_letters(host.lower())
+    return any(brand in cleanedHost and brand not in host.lower() for brand in KNOWN_BRANDS)
+
+
+# Marks the result as rule-adjusted so the score and its confidence stay honest
+def apply_lookalike_penalty(url, result):
+    if is_brand_lookalike(url):
+        result["score"] = min(result["score"], LOOKALIKE_MAX_SCORE)
+        result["label"] = pick_label(result["score"])
+        result["confidence"] = 0.9
+        result["source"] = result["source"] + "+lookalike_rule"
+    return result
+
+
 # Module contract entry point: model first, backup rules second, never raises
 def predict_with_model(url):
-    modelResult = try_model_prediction(url)
-    if modelResult is not None:
-        return modelResult
     try:
-        return score_with_rules(url)
+        modelResult = try_model_prediction(url) or score_with_rules(url)
+        return apply_lookalike_penalty(url, modelResult)
     except Exception as error:
         return {"error": f"model: {error}", "score": None}

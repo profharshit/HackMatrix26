@@ -39,6 +39,14 @@ function Gauge({ value, color }) {
   );
 }
 
+// Shows the module's own note when it has no score, instead of a generic message
+function describeModuleNotes(module, issues) {
+  if (module?.score == null) {
+    return [module?.details?.note || module?.error || 'Check skipped or timed out'];
+  }
+  return issues.length ? issues.slice(0, 3) : ['No issues found'];
+}
+
 function ScanResult({ scan }) {
   const v = VERDICT[scan.verdict] || VERDICT.suspicious;
   const bd = scan.breakdown || {};
@@ -74,6 +82,7 @@ function ScanResult({ scan }) {
           const m = bd[key];
           const s = m?.score;
           const issues = m?.issues || (key === 'threat_intel' ? m?.feeds_hit : []) || [];
+          const notes = describeModuleNotes(m, issues);
           return (
             <div key={key} className="rounded-2xl border border-[#22396F]/70 bg-ink-950 p-5 flex flex-col justify-between">
               <div>
@@ -89,7 +98,7 @@ function ScanResult({ scan }) {
                 </div>
               </div>
               <ul className="mt-4 space-y-1.5 text-xs text-slate-muted">
-                {s == null ? <li>Check skipped or timed out</li> : issues.slice(0, 3).map((x, i) => <li key={i}>• {x}</li>)}
+                {notes.map((x, i) => <li key={i}>• {x}</li>)}
               </ul>
             </div>
           );

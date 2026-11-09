@@ -51,7 +51,7 @@ def read_stale_cache(cache_path):
     return None
 
 
-# Returns the feed text from cache if fresh, otherwise downloads and caches it.
+# Returns the feed text from cache if fresh, otherwise downloads, caches and returns it.
 def get_feed_text(feed):
     cache_path = CACHE_FOLDER / f"{feed['name']}.txt"
     if is_cache_fresh(cache_path):
@@ -60,13 +60,13 @@ def get_feed_text(feed):
     try:
         text = download_text(feed["url"], feed["headers"])
     except urllib.error.HTTPError as error:
-        # Shows the HTTP status code so a blocked feed is easy to diagnose
         print(f"  download error: HTTP {error.code} {error.reason}")
         return read_stale_cache(cache_path)
     except Exception as error:
         print(f"  download error: {type(error).__name__}")
         return read_stale_cache(cache_path)
-
+    cache_path.write_text(text, encoding="utf-8")
+    return text
 
 # Reads feeds that are just one URL per line (OpenPhish, URLhaus).
 def parse_plain_url_list(text):
