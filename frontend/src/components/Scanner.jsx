@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Search, Loader2, History, Globe } from 'lucide-react';
 import Reveal from './Reveal';
+import VideoIcon from './VideoIcon';
 import { scanUrl, getDomainIntel, saveScanToHistory, getSavedScanHistory, clearScanHistory } from '../services/api';
 import { PRESET_TARGETS } from '../services/mockData';
 
@@ -11,10 +12,10 @@ const VERDICT = {
 };
 
 const MODULES = [
-  ['model', 'AI model'],
-  ['certificate', 'Certificate'],
-  ['web_security', 'Web security'],
-  ['threat_intel', 'Threat intel'],
+  ['model', 'AI model', '/icons/gear-wrench.mp4'],
+  ['certificate', 'Certificate', '/icons/key.mp4'],
+  ['web_security', 'Web security', '/icons/security.mp4'],
+  ['threat_intel', 'Threat intel', '/icons/global-education.mp4'],
 ];
 
 function Gauge({ value, color }) {
@@ -60,18 +61,23 @@ function ScanResult({ scan }) {
       </div>
 
       <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {MODULES.map(([key, label]) => {
+        {MODULES.map(([key, label, video]) => {
           const m = bd[key];
           const s = m?.score;
           const issues = m?.issues || (key === 'threat_intel' ? m?.feeds_hit : []) || [];
           return (
-            <div key={key} className="rounded-2xl border border-[#22396F]/70 bg-ink-950 p-5">
-              <div className="flex items-baseline justify-between">
-                <span className="text-sm text-slate">{label}</span>
-                <span className="font-mono text-lg text-bone font-semibold">{s ?? '—'}</span>
-              </div>
-              <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-[#0D1C42]">
-                <div className="h-full rounded-full" style={{ width: `${s ?? 0}%`, background: v.color }} />
+            <div key={key} className="rounded-2xl border border-[#22396F]/70 bg-ink-950 p-5 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-2.5">
+                    <VideoIcon src={video} size="xs" />
+                    <span className="text-sm font-medium text-slate">{label}</span>
+                  </div>
+                  <span className="font-mono text-lg text-bone font-semibold">{s ?? '—'}</span>
+                </div>
+                <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-[#0D1C42]">
+                  <div className="h-full rounded-full" style={{ width: `${s ?? 0}%`, background: v.color }} />
+                </div>
               </div>
               <ul className="mt-4 space-y-1.5 text-xs text-slate-muted">
                 {s == null ? <li>Check skipped or timed out</li> : issues.slice(0, 3).map((x, i) => <li key={i}>• {x}</li>)}

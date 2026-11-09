@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Brain, Lock, ShieldAlert, Radar, Megaphone, Plus, Minus, ArrowRight, Check } from 'lucide-react';
 import Reveal from './Reveal';
+import VideoIcon from './VideoIcon';
 
 /* ---------- Three layers ---------- */
 const LAYERS = [
@@ -68,31 +69,31 @@ export function Numbers() {
 /* ---------- Platform tabs ---------- */
 const MODULES = [
   {
-    id: 'model', icon: Brain, name: 'Detect',
+    id: 'model', icon: Brain, video: '/icons/gear-wrench.mp4', name: 'Detect',
     title: 'AI that reads the URL itself.',
     body: 'A model scores lexical features such as length, subdomain depth, keywords, entropy and IP hosts to spot phishing and brand impersonation before a page even loads.',
     bars: [['Brand impersonation', 12], ['Subdomain depth', 30], ['URL entropy', 22]],
   },
   {
-    id: 'cert', icon: Lock, name: 'Certificates',
+    id: 'cert', icon: Lock, video: '/icons/key.mp4', name: 'Certificates',
     title: 'Check the chain, not just the padlock.',
     body: 'Validates issuer, expiry, key strength, SAN coverage and Certificate Transparency presence, so weak keys and untrusted CAs surface immediately.',
     bars: [['Chain valid to root', 100], ['CT log presence', 90], ['Key strength', 85]],
   },
   {
-    id: 'web', icon: ShieldAlert, name: 'Web security',
+    id: 'web', icon: ShieldAlert, video: '/icons/security.mp4', name: 'Web security',
     title: 'Headers that tell the truth.',
     body: 'Inspects HSTS, CSP, X-Frame-Options, cookie flags and redirect behaviour. Missing protections turn into specific, fixable findings.',
     bars: [['HSTS', 100], ['Content-Security-Policy', 60], ['Cookie flags', 75]],
   },
   {
-    id: 'intel', icon: Radar, name: 'Threat intel',
+    id: 'intel', icon: Radar, video: '/icons/global-education.mp4', name: 'Threat intel',
     title: 'Every feed, one verdict.',
     body: 'Cross-references domain age, registrar and known blocklists, then folds in community reports so new campaigns are caught as they emerge.',
     bars: [['Feed hits', 100], ['Domain age', 80], ['Community trust', 90]],
   },
   {
-    id: 'report', icon: Megaphone, name: 'Report',
+    id: 'report', icon: Megaphone, video: '/icons/3333.mp4', name: 'Report',
     title: 'Crowd-sourced defence.',
     body: 'Spotted something dodgy? Report it. Community reports and votes feed straight back into the threat intel score for the next person who scans it.',
     bars: [['Reports submitted', 70], ['Verified', 45], ['Upvotes', 85]],
@@ -114,20 +115,21 @@ export function Platform() {
       </Reveal>
 
       <Reveal className="mt-14">
-        <div role="tablist" aria-label="Platform modules" className="flex flex-wrap gap-2">
+        <div role="tablist" aria-label="Platform modules" className="flex flex-wrap gap-2.5">
           {MODULES.map((x, i) => (
             <button
               key={x.id}
               role="tab"
               aria-selected={i === active}
               onClick={() => setActive(i)}
-              className={`rounded-full border px-5 py-2.5 text-sm font-medium transition-all cursor-pointer ${
+              className={`inline-flex items-center gap-2.5 rounded-full border px-4 py-2 text-sm font-medium transition-all cursor-pointer ${
                 i === active
                   ? 'border-accent bg-accent text-ink-950 font-bold shadow-[0_0_20px_-3px_rgba(252,241,208,0.4)]'
                   : 'border-[#22396F] bg-[#111215]/60 text-slate hover:border-accent hover:text-white'
               }`}
             >
-              {x.name}
+              <VideoIcon src={x.video} size="xs" fallback={x.icon} className={i === active ? 'ring-1 ring-accent' : ''} />
+              <span>{x.name}</span>
             </button>
           ))}
         </div>
@@ -135,7 +137,7 @@ export function Platform() {
         <div className="card mt-6 grid gap-10 p-8 md:grid-cols-2 md:p-12 border-[#22396F] bg-ink-800" role="tabpanel">
           <div className="flex flex-col justify-between gap-10">
             <div>
-              <Icon className="h-9 w-9 text-accent" strokeWidth={1.6} />
+              <VideoIcon src={m.video} size="lg" fallback={Icon} className="shadow-[0_8px_30px_rgba(252,241,208,0.2)]" />
               <h3 className="mt-6 text-3xl font-semibold leading-tight tracking-tight text-bone md:text-4xl">{m.title}</h3>
               <p className="mt-5 max-w-md leading-relaxed text-slate">{m.body}</p>
             </div>

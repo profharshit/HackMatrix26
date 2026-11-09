@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
+import VideoIcon from './VideoIcon';
 
 function Ring({ value, size = 150, stroke = 12 }) {
   const r = (size - stroke) / 2;
@@ -16,7 +17,10 @@ function Ring({ value, size = 150, stroke = 12 }) {
 }
 
 const ROWS = [
-  ['AI model', 96], ['Certificate', 92], ['Web security', 88], ['Threat intel', 100],
+  ['AI model', 96, '/icons/gear-wrench.mp4'],
+  ['Certificate', 92, '/icons/key.mp4'],
+  ['Web security', 88, '/icons/security.mp4'],
+  ['Threat intel', 100, '/icons/global-education.mp4'],
 ];
 
 export default function Hero() {
@@ -73,10 +77,13 @@ export default function Hero() {
               </div>
             </div>
             <div className="space-y-4">
-              {ROWS.map(([label, v]) => (
+              {ROWS.map(([label, v, video]) => (
                 <div key={label}>
-                  <div className="mb-1.5 flex justify-between text-sm">
-                    <span className="text-bone/90 font-medium">{label}</span>
+                  <div className="mb-1.5 flex items-center justify-between text-sm">
+                    <span className="flex items-center gap-2 text-bone/90 font-medium">
+                      <VideoIcon src={video} size="xs" />
+                      {label}
+                    </span>
                     <span className="font-mono text-slate">{v}</span>
                   </div>
                   <div className="h-1.5 overflow-hidden rounded-full bg-[#111215]">

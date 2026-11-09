@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Reveal from './Reveal';
+import VideoIcon from './VideoIcon';
 import { submitThreatReport } from '../services/api';
 
 const CATEGORIES = ['Phishing', 'Fake Recruitment', 'Credential Harvesting', 'Malware', 'Certificate Anomaly', 'Other'];
@@ -27,7 +28,10 @@ export default function ReportForm() {
     <section id="report" className="border-t border-[#22396F] bg-[#0D1C42]/50 py-28 md:py-36">
       <div className="container-x grid gap-14 lg:grid-cols-2">
         <Reveal>
-          <p className="eyebrow">Community intelligence</p>
+          <div className="flex items-center gap-3">
+            <VideoIcon src="/icons/3333.mp4" size="sm" />
+            <span className="eyebrow">Community intelligence</span>
+          </div>
           <h2 className="h-display mt-5 text-[clamp(2.2rem,5vw,4.2rem)] text-bone">Seen something suspicious?</h2>
           <p className="mt-6 max-w-md text-lg text-slate">
             Reports from people like you feed directly into the threat intel score, protecting the next person who scans the same link.

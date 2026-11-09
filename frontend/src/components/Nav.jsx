@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Menu, X, ShieldCheck } from 'lucide-react';
+import VideoIcon from './VideoIcon';
 
 const LINKS = [
   { href: '#platform', label: 'Platform' },
@@ -27,8 +28,8 @@ export default function Nav({ online }) {
       }`}
     >
       <div className="container-x flex h-16 items-center justify-between">
-        <a href="#top" className="flex items-center gap-2.5 text-lg font-bold tracking-tight text-bone">
-          <ShieldCheck className="h-6 w-6 text-accent" strokeWidth={2.2} />
+        <a href="#top" className="flex items-center gap-2.5 text-lg font-bold tracking-tight text-bone group">
+          <VideoIcon src="/icons/security.mp4" size="xs" fallback={ShieldCheck} className="group-hover:scale-105 transition-transform" />
           <span>ThreatWho</span>
         </a>
 
