@@ -25,7 +25,7 @@ export default function CertificateView({ activeScan }) {
       {/* Incident Case Study Spotlight Card */}
       <div className="bg-white border-2 border-navy-900 rounded-lg p-6 shadow-brutal">
         <div className="flex flex-col sm:flex-row items-start gap-4">
-          <div className="w-12 h-12 rounded bg-navy-900 flex items-center justify-center flex-shrink-0 shadow-brutal-sm p-2">
+          <div className="w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center flex-shrink-0">
             <img src={keyIcon} alt="Certificate Key" className="w-full h-full object-contain" />
           </div>
           <div className="space-y-1">
