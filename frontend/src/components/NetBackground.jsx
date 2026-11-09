@@ -6,8 +6,8 @@ import React, { useEffect, useRef } from 'react';
  * color: 0xffffff, backgroundColor: 0x212740, mouseControls: true, touchControls: true
  */
 export default function NetBackground({
-  color = 0xffffff,
-  backgroundColor = 0x212740,
+  color = 0xe8e8e8,
+  backgroundColor = 0x15193b,
   className = '',
   children,
 }) {

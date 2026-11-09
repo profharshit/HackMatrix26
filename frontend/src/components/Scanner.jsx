@@ -3,6 +3,7 @@ import { Search, Loader2, History, Globe } from 'lucide-react';
 import Reveal from './Reveal';
 import VideoIcon from './VideoIcon';
 import Button from './Button';
+import NetBackground from './NetBackground';
 import { scanUrl, getDomainIntel, saveScanToHistory, getSavedScanHistory, clearScanHistory } from '../services/api';
 import { PRESET_TARGETS } from '../services/mockData';
 
@@ -129,8 +130,18 @@ export default function Scanner({ online }) {
   };
 
   return (
-    <section id="scanner" className="border-t border-[#22396F] py-28 md:py-36">
-      <div className="container-x">
+    <section id="scanner" className="border-t border-[#22396F] overflow-hidden">
+      <NetBackground
+        color={0xe8e8e8}
+        backgroundColor={0x15193b}
+        className="py-28 md:py-36"
+      >
+        {/* Soft edge blend for smooth section transition */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#17181c]/80 via-transparent to-[#17181c]/80 z-[1]"
+        />
+        <div className="container-x relative z-10">
         <Reveal>
           <p className="eyebrow">Live scanner</p>
           <h2 className="h-display mt-5 max-w-4xl text-[clamp(2.2rem,6vw,5rem)] text-bone">See what a link is hiding.</h2>
@@ -220,6 +231,7 @@ export default function Scanner({ online }) {
           </Reveal>
         </div>
       </div>
-    </section>
-  );
+    </NetBackground>
+  </section>
+);
 }

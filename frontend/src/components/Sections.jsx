@@ -310,8 +310,8 @@ export function Cta() {
     <section className="container-x pb-24">
       <Reveal className="relative overflow-hidden rounded-[2.5rem] border border-[#22396F] shadow-[0_20px_70px_-15px_rgba(1,7,54,0.95)]">
         <NetBackground
-          color={0xffffff}
-          backgroundColor={0x212740}
+          color={0xe8e8e8}
+          backgroundColor={0x15193b}
           className="p-10 text-bone md:p-20"
         >
           {/* Subtle gradient vignette to ensure high contrast */}
