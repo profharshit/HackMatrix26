@@ -22,7 +22,7 @@ SUSPICIOUS_MIN_SCORE = 40
 SCORE_WHEN_ALL_CHECKS_FAIL = 50
 
 # Where the ML teammate's file must be placed (fixed on purpose, never taken from user input)
-MODEL_FILE_PATH = Path(__file__).parent / "models" / "model.joblib"
+MODEL_FILE_PATH = Path(__file__).parent / "models" / "phishing_url_only_pipeline.joblib"
 
 # Feature names in the exact order the model was trained with (replace with teammate's list)
 # Each name must exist in extract_url_features() inside modules/url_features.py

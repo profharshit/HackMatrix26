@@ -2,11 +2,13 @@ import logging
 import warnings
 
 import joblib
+import pandas as pd
 from sklearn.exceptions import InconsistentVersionWarning
 
-from app.config import MODEL_FEATURE_NAMES, MODEL_FILE_PATH
+from app.config import MODEL_FILE_PATH
 from app.modules.url_features import extract_url_features
 
+SUSPICIOUS_WORDS = ("login", "verify", "secure", "account", "update", "bank", "paypal")
 logger = logging.getLogger(__name__)
 modelState = {"isLoaded": False, "model": None}
 
@@ -50,13 +52,13 @@ def get_model():
     return modelState["model"]
 
 
-# The model expects numbers in the exact order it was trained with
-def build_feature_row(url):
+# The model expects a one-row table with columns in the exact trained order
+def build_feature_row(featureNames, url):
     features = extract_url_features(url)
-    missingNames = [name for name in MODEL_FEATURE_NAMES if name not in features]
+    missingNames = [name for name in featureNames if name not in features]
     if missingNames:
         raise ValueError("extract_url_features is missing: " + ", ".join(missingNames))
-    return [features[name] for name in MODEL_FEATURE_NAMES]
+    return pd.DataFrame([features], columns=featureNames)
 
 
 # Shared by model and backup rules so labels always match the score
@@ -68,32 +70,38 @@ def pick_label(trustScore):
     return "legitimate"
 
 
-# Asks the real model; assumes class 1 means phishing (confirm with the ML teammate)
-def score_with_model(model, url):
-    phishingChance = float(model.predict_proba([build_feature_row(url)])[0][1])
+# Asks the real model; class 1 means phishing in the training notebook
+def score_with_model(modelBundle, url):
+    featureRow = build_feature_row(modelBundle["features"], url)
+    phishingChance = float(modelBundle["pipeline"].predict_proba(featureRow)[0][1])
     trustScore = round((1 - phishingChance) * 100)
     confidence = round(max(phishingChance, 1 - phishingChance), 2)
     return {"score": trustScore, "label": pick_label(trustScore), "confidence": confidence, "source": "model"}
 
+# A word list check keeps the backup rules simple and easy to explain
+def has_suspicious_word(url):
+    lowerUrl = url.lower()
+    return any(word in lowerUrl for word in SUSPICIOUS_WORDS)
 
 # Simple warning-sign rules so the demo still works when the model is late or broken
 def score_with_rules(url):
     features = extract_url_features(url)
     trustScore = 100
-    if features["has_ip_address"]:
+    if features["IsDomainIP"]:
         trustScore -= 30
-    if features["has_at_symbol"]:
+    if features["HasObfuscation"]:
         trustScore -= 20
-    if not features["uses_https"]:
+    if not features["IsHTTPS"]:
         trustScore -= 15
-    if features["url_length"] > 75:
+    if features["URLLength"] > 75:
         trustScore -= 10
-    if features["hyphen_count"] >= 3:
+    if url.count("-") >= 3:
         trustScore -= 10
-    if features["subdomain_count"] >= 3:
+    if features["NoOfSubDomain"] >= 3:
         trustScore -= 10
-    if features["has_suspicious_word"]:
+    if has_suspicious_word(url):
         trustScore -= 15
+    trustScore = max(trustScore, 0)
     return {"score": trustScore, "label": pick_label(trustScore), "confidence": 0.5, "source": "heuristic"}
 
 
