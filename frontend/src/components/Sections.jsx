@@ -4,6 +4,7 @@ import Reveal from './Reveal';
 import VideoIcon from './VideoIcon';
 import Button from './Button';
 import NetBackground from './NetBackground';
+import DotsBackground from './DotsBackground';
 
 /* ---------- Three layers ---------- */
 const LAYERS = [
@@ -107,64 +108,73 @@ export function Platform() {
   const m = MODULES[active];
   const Icon = m.icon;
   return (
-    <section id="platform" className="container-x py-28 md:py-36">
-      <Reveal>
-        <p className="eyebrow">The platform</p>
-        <h2 className="h-display mt-5 max-w-4xl text-[clamp(2.2rem,6vw,5rem)] text-bone">One platform for every trust decision.</h2>
-        <p className="mt-6 max-w-2xl text-lg text-slate">
-          Detection, certificate validation, security assessment and community intelligence, working as one system.
-        </p>
-      </Reveal>
+    <section id="platform" className="relative overflow-hidden">
+      <DotsBackground
+        color={0xcccccc}
+        color2={0xc0c0c0}
+        backgroundColor={0x17181c}
+        className="py-28 md:py-36"
+      >
+        <div className="container-x relative z-10">
+          <Reveal>
+            <p className="eyebrow">The platform</p>
+            <h2 className="h-display mt-5 max-w-4xl text-[clamp(2.2rem,6vw,5rem)] text-bone">One platform for every trust decision.</h2>
+            <p className="mt-6 max-w-2xl text-lg text-slate">
+              Detection, certificate validation, security assessment and community intelligence, working as one system.
+            </p>
+          </Reveal>
 
-      <Reveal className="mt-14">
-        <div role="tablist" aria-label="Platform modules" className="flex flex-wrap gap-2.5">
-          {MODULES.map((x, i) => (
-            <button
-              key={x.id}
-              role="tab"
-              aria-selected={i === active}
-              onClick={() => setActive(i)}
-              className={`inline-flex items-center gap-2.5 rounded-full border px-4 py-2 text-sm font-medium transition-all cursor-pointer ${
-                i === active
-                  ? 'border-accent bg-accent text-ink-950 font-bold shadow-[0_0_20px_-3px_rgba(252,241,208,0.4)]'
-                  : 'border-[#22396F] bg-[#111215]/60 text-slate hover:border-accent hover:text-white'
-              }`}
-            >
-              <VideoIcon src={x.video} size="xs" fallback={x.icon} className={i === active ? 'ring-1 ring-accent' : ''} />
-              <span>{x.name}</span>
-            </button>
-          ))}
-        </div>
-
-        <div className="card mt-6 grid gap-10 p-8 md:grid-cols-2 md:p-12 border-[#22396F] bg-ink-800" role="tabpanel">
-          <div className="flex flex-col justify-between gap-10">
-            <div>
-              <VideoIcon src={m.video} size="lg" fallback={Icon} className="shadow-[0_8px_30px_rgba(252,241,208,0.2)]" />
-              <h3 className="mt-6 text-3xl font-semibold leading-tight tracking-tight text-bone md:text-4xl">{m.title}</h3>
-              <p className="mt-5 max-w-md leading-relaxed text-slate">{m.body}</p>
-            </div>
-            <a href="#scanner" className="inline-flex items-center gap-2 text-sm font-medium text-accent hover:text-white hover:gap-3 transition-all">
-              Try it on a real URL <ArrowRight className="h-4 w-4" />
-            </a>
-          </div>
-          <div className="rounded-2xl border border-[#22396F]/70 bg-ink-950 p-6 md:p-8">
-            <p className="mb-6 font-mono text-[11px] uppercase tracking-widest text-slate-muted">{m.name} · sample signals</p>
-            <div className="space-y-6">
-              {m.bars.map(([l, v]) => (
-                <div key={l}>
-                  <div className="mb-2 flex justify-between text-sm">
-                    <span className="text-bone/90">{l}</span>
-                    <span className="font-mono text-slate-muted">{v}%</span>
-                  </div>
-                  <div className="h-2 overflow-hidden rounded-full bg-[#0D1C42]">
-                    <div className="h-full rounded-full bg-accent transition-all duration-700" style={{ width: `${v}%` }} />
-                  </div>
-                </div>
+          <Reveal className="mt-14">
+            <div role="tablist" aria-label="Platform modules" className="flex flex-wrap gap-2.5">
+              {MODULES.map((x, i) => (
+                <button
+                  key={x.id}
+                  role="tab"
+                  aria-selected={i === active}
+                  onClick={() => setActive(i)}
+                  className={`inline-flex items-center gap-2.5 rounded-full border px-4 py-2 text-sm font-medium transition-all cursor-pointer ${
+                    i === active
+                      ? 'border-accent bg-accent text-ink-950 font-bold shadow-[0_0_20px_-3px_rgba(252,241,208,0.4)]'
+                      : 'border-[#22396F] bg-[#111215]/60 text-slate hover:border-accent hover:text-white'
+                  }`}
+                >
+                  <VideoIcon src={x.video} size="xs" fallback={x.icon} className={i === active ? 'ring-1 ring-accent' : ''} />
+                  <span>{x.name}</span>
+                </button>
               ))}
             </div>
-          </div>
+
+            <div className="card mt-6 grid gap-10 p-8 md:grid-cols-2 md:p-12 border-[#22396F] bg-ink-800" role="tabpanel">
+              <div className="flex flex-col justify-between gap-10">
+                <div>
+                  <VideoIcon src={m.video} size="lg" fallback={Icon} className="shadow-[0_8px_30px_rgba(252,241,208,0.2)]" />
+                  <h3 className="mt-6 text-3xl font-semibold leading-tight tracking-tight text-bone md:text-4xl">{m.title}</h3>
+                  <p className="mt-5 max-w-md leading-relaxed text-slate">{m.body}</p>
+                </div>
+                <a href="#scanner" className="inline-flex items-center gap-2 text-sm font-medium text-accent hover:text-white hover:gap-3 transition-all">
+                  Try it on a real URL <ArrowRight className="h-4 w-4" />
+                </a>
+              </div>
+              <div className="rounded-2xl border border-[#22396F]/70 bg-ink-950 p-6 md:p-8">
+                <p className="mb-6 font-mono text-[11px] uppercase tracking-widest text-slate-muted">{m.name} · sample signals</p>
+                <div className="space-y-6">
+                  {m.bars.map(([l, v]) => (
+                    <div key={l}>
+                      <div className="mb-2 flex justify-between text-sm">
+                        <span className="text-bone/90">{l}</span>
+                        <span className="font-mono text-slate-muted">{v}%</span>
+                      </div>
+                      <div className="h-2 overflow-hidden rounded-full bg-[#0D1C42]">
+                        <div className="h-full rounded-full bg-accent transition-all duration-700" style={{ width: `${v}%` }} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </Reveal>
         </div>
-      </Reveal>
+      </DotsBackground>
     </section>
   );
 }
