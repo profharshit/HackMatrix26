@@ -1,58 +1,50 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ['./index.html', './src/**/*.{js,jsx}'],
   theme: {
     extend: {
       colors: {
-        paper: {
-          50: '#fdfcf9',
-          100: '#faf9f6',
-          200: '#f3f2ee',
-          300: '#e7e5df',
-          400: '#d3d0c7',
-          500: '#a8a59b',
+        // Darkish grey background (#17181c / #111215) with 0D1C42 card surfaces, 22396F borders, and FCF1D0 cream accent
+        ink: {
+          950: '#111215', // Deep darkish grey
+          900: '#17181c', // Primary darkish grey background
+          850: '#1e2026',
+          800: '#0D1C42', // Card and panel surfaces (Navy surface)
+          750: '#162754',
+          700: '#22396F', // Borders and interactive elements (Sapphire)
+          600: '#2B4685',
+          500: '#3A5DAE',
         },
         navy: {
-          50: '#f0f4ff',
-          100: '#e0e7ff',
-          200: '#c7d2fe',
-          300: '#a5b4fc',
-          400: '#818cf8',
-          500: '#3b82f6',
-          600: '#2563eb',
-          700: '#1d4ed8',
-          800: '#1e3a8a',
-          900: '#0f172a',
-          950: '#080d19',
+          deep: '#17181c',
+          surface: '#0D1C42',
+          border: '#22396F',
         },
-        grey: {
-          50: '#fafafa',
-          100: '#f4f4f5',
-          200: '#e4e4e7',
-          300: '#d4d4d8',
-          400: '#a1a1aa',
-          500: '#71717a',
-          600: '#52525b',
-          700: '#3f3f46',
-          800: '#27272a',
-          900: '#18181b',
-        }
+        bone: '#FCF1D0', // Champagne cream text
+        slate: {
+          DEFAULT: '#C3CEE6', // Soft slate with high contrast
+          muted: '#8A9DBF',
+          dark: '#586E9E',
+        },
+        accent: {
+          DEFAULT: '#FCF1D0', // Champagne / pale gold accent
+          hover: '#FFFFFF',
+          muted: '#D8D1BE',
+          glow: 'rgba(252, 241, 208, 0.25)',
+        },
+        mint: '#FCF1D0',
+        danger: '#FF6B6B',
+        warn: '#FFD166',
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        display: ['Space Grotesk', 'Inter', 'sans-serif'],
-        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+        sans: ['"Inter Tight"', 'system-ui', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
       },
-      boxShadow: {
-        'brutal-sm': '2px 2px 0px #0f172a',
-        'brutal': '3px 3px 0px #0f172a',
-        'brutal-lg': '5px 5px 0px #0f172a',
-        'brutal-white': '3px 3px 0px #ffffff',
-      }
+      keyframes: {
+        marquee: { from: { transform: 'translateX(0)' }, to: { transform: 'translateX(-50%)' } },
+      },
+      animation: { marquee: 'marquee 40s linear infinite' },
     },
   },
   plugins: [],
-}
+};
