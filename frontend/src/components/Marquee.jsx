@@ -5,7 +5,7 @@ const ITEMS = ['PhishTank', 'OpenPhish', 'URLhaus', 'Google Safe Browsing', 'Cer
 export default function Marquee() {
   const row = [...ITEMS, ...ITEMS];
   return (
-    <section className="mt-20 border-y border-[#22396F] py-8 bg-[#111215]/50" aria-label="Signals ThreatWho reads">
+    <section className="mt-20 py-8 bg-gradient-to-r from-transparent via-[#111215]/70 to-transparent" aria-label="Signals ThreatWho reads">
       <p className="mb-5 text-center font-mono text-[11px] uppercase tracking-[0.18em] text-slate-muted">
         Signals we read, passively
       </p>

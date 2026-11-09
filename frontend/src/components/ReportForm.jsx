@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import Reveal from './Reveal';
+import VideoIcon from './VideoIcon';
+import Button from './Button';
 import { submitThreatReport } from '../services/api';
 
 const CATEGORIES = ['Phishing', 'Fake Recruitment', 'Credential Harvesting', 'Malware', 'Certificate Anomaly', 'Other'];
@@ -24,10 +26,13 @@ export default function ReportForm() {
   const input = 'w-full rounded-2xl border border-[#22396F] bg-[#111215] px-5 py-3.5 outline-none text-bone placeholder:text-slate-muted focus:border-accent transition-colors';
 
   return (
-    <section id="report" className="border-t border-[#22396F] bg-[#0D1C42]/50 py-28 md:py-36">
+    <section id="report" className="relative overflow-hidden bg-gradient-to-b from-[#17181c] via-[#0D1C42]/35 to-[#17181c] py-28 md:py-36">
       <div className="container-x grid gap-14 lg:grid-cols-2">
         <Reveal>
-          <p className="eyebrow">Community intelligence</p>
+          <div className="flex items-center gap-3">
+            <VideoIcon src="/icons/3333.mp4" size="sm" />
+            <span className="eyebrow">Community intelligence</span>
+          </div>
           <h2 className="h-display mt-5 text-[clamp(2.2rem,5vw,4.2rem)] text-bone">Seen something suspicious?</h2>
           <p className="mt-6 max-w-md text-lg text-slate">
             Reports from people like you feed directly into the threat intel score, protecting the next person who scans the same link.
@@ -44,7 +49,9 @@ export default function ReportForm() {
             </div>
             <textarea required rows={4} className={input} placeholder="What made it suspicious?" value={f.comment} onChange={set('comment')} aria-label="Comment" />
             <div className="flex items-center gap-4">
-              <button className="btn-primary px-7 py-3 text-base" disabled={state.busy}>{state.busy ? 'Submitting…' : 'Submit report'}</button>
+              <Button type="submit" variant="primary" disabled={state.busy} className="!px-8 !py-3.5 !text-base">
+                {state.busy ? 'Submitting…' : 'Submit report'}
+              </Button>
               {state.msg && <p role="status" className="text-sm text-slate">{state.msg}</p>}
             </div>
           </form>

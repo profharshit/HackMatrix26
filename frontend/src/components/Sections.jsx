@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { Brain, Lock, ShieldAlert, Radar, Megaphone, Plus, Minus, ArrowRight, Check } from 'lucide-react';
 import Reveal from './Reveal';
+import VideoIcon from './VideoIcon';
+import Button from './Button';
+import NetBackground from './NetBackground';
+import DotsBackground from './DotsBackground';
 
 /* ---------- Three layers ---------- */
 const LAYERS = [
@@ -52,8 +56,8 @@ const STATS = [
 
 export function Numbers() {
   return (
-    <section className="border-y border-[#22396F] bg-[#0D1C42]/60">
-      <div className="container-x grid grid-cols-2 gap-y-10 py-16 md:grid-cols-4">
+    <section className="relative overflow-hidden bg-gradient-to-b from-[#17181c] via-[#0D1C42]/45 to-[#17181c] py-16">
+      <div className="container-x grid grid-cols-2 gap-y-10 md:grid-cols-4">
         {STATS.map(([n, l], i) => (
           <Reveal key={l} delay={i * 80}>
             <div className="text-5xl font-semibold tracking-tight md:text-6xl text-bone">{n}</div>
@@ -68,31 +72,31 @@ export function Numbers() {
 /* ---------- Platform tabs ---------- */
 const MODULES = [
   {
-    id: 'model', icon: Brain, name: 'Detect',
+    id: 'model', icon: Brain, video: '/icons/gear-wrench.mp4', name: 'Detect',
     title: 'AI that reads the URL itself.',
     body: 'A model scores lexical features such as length, subdomain depth, keywords, entropy and IP hosts to spot phishing and brand impersonation before a page even loads.',
     bars: [['Brand impersonation', 12], ['Subdomain depth', 30], ['URL entropy', 22]],
   },
   {
-    id: 'cert', icon: Lock, name: 'Certificates',
+    id: 'cert', icon: Lock, video: '/icons/key.mp4', name: 'Certificates',
     title: 'Check the chain, not just the padlock.',
     body: 'Validates issuer, expiry, key strength, SAN coverage and Certificate Transparency presence, so weak keys and untrusted CAs surface immediately.',
     bars: [['Chain valid to root', 100], ['CT log presence', 90], ['Key strength', 85]],
   },
   {
-    id: 'web', icon: ShieldAlert, name: 'Web security',
+    id: 'web', icon: ShieldAlert, video: '/icons/security.mp4', name: 'Web security',
     title: 'Headers that tell the truth.',
     body: 'Inspects HSTS, CSP, X-Frame-Options, cookie flags and redirect behaviour. Missing protections turn into specific, fixable findings.',
     bars: [['HSTS', 100], ['Content-Security-Policy', 60], ['Cookie flags', 75]],
   },
   {
-    id: 'intel', icon: Radar, name: 'Threat intel',
+    id: 'intel', icon: Radar, video: '/icons/global-education.mp4', name: 'Threat intel',
     title: 'Every feed, one verdict.',
     body: 'Cross-references domain age, registrar and known blocklists, then folds in community reports so new campaigns are caught as they emerge.',
     bars: [['Feed hits', 100], ['Domain age', 80], ['Community trust', 90]],
   },
   {
-    id: 'report', icon: Megaphone, name: 'Report',
+    id: 'report', icon: Megaphone, video: '/icons/3333.mp4', name: 'Report',
     title: 'Crowd-sourced defence.',
     body: 'Spotted something dodgy? Report it. Community reports and votes feed straight back into the threat intel score for the next person who scans it.',
     bars: [['Reports submitted', 70], ['Verified', 45], ['Upvotes', 85]],
@@ -104,63 +108,73 @@ export function Platform() {
   const m = MODULES[active];
   const Icon = m.icon;
   return (
-    <section id="platform" className="container-x py-28 md:py-36">
-      <Reveal>
-        <p className="eyebrow">The platform</p>
-        <h2 className="h-display mt-5 max-w-4xl text-[clamp(2.2rem,6vw,5rem)] text-bone">One platform for every trust decision.</h2>
-        <p className="mt-6 max-w-2xl text-lg text-slate">
-          Detection, certificate validation, security assessment and community intelligence, working as one system.
-        </p>
-      </Reveal>
+    <section id="platform" className="relative overflow-hidden">
+      <DotsBackground
+        color={0xcccccc}
+        color2={0xc0c0c0}
+        backgroundColor={0x17181c}
+        className="py-28 md:py-36"
+      >
+        <div className="container-x relative z-10">
+          <Reveal>
+            <p className="eyebrow">The platform</p>
+            <h2 className="h-display mt-5 max-w-4xl text-[clamp(2.2rem,6vw,5rem)] text-bone">One platform for every trust decision.</h2>
+            <p className="mt-6 max-w-2xl text-lg text-slate">
+              Detection, certificate validation, security assessment and community intelligence, working as one system.
+            </p>
+          </Reveal>
 
-      <Reveal className="mt-14">
-        <div role="tablist" aria-label="Platform modules" className="flex flex-wrap gap-2">
-          {MODULES.map((x, i) => (
-            <button
-              key={x.id}
-              role="tab"
-              aria-selected={i === active}
-              onClick={() => setActive(i)}
-              className={`rounded-full border px-5 py-2.5 text-sm font-medium transition-all cursor-pointer ${
-                i === active
-                  ? 'border-accent bg-accent text-ink-950 font-bold shadow-[0_0_20px_-3px_rgba(252,241,208,0.4)]'
-                  : 'border-[#22396F] bg-[#111215]/60 text-slate hover:border-accent hover:text-white'
-              }`}
-            >
-              {x.name}
-            </button>
-          ))}
-        </div>
-
-        <div className="card mt-6 grid gap-10 p-8 md:grid-cols-2 md:p-12 border-[#22396F] bg-ink-800" role="tabpanel">
-          <div className="flex flex-col justify-between gap-10">
-            <div>
-              <Icon className="h-9 w-9 text-accent" strokeWidth={1.6} />
-              <h3 className="mt-6 text-3xl font-semibold leading-tight tracking-tight text-bone md:text-4xl">{m.title}</h3>
-              <p className="mt-5 max-w-md leading-relaxed text-slate">{m.body}</p>
-            </div>
-            <a href="#scanner" className="inline-flex items-center gap-2 text-sm font-medium text-accent hover:text-white hover:gap-3 transition-all">
-              Try it on a real URL <ArrowRight className="h-4 w-4" />
-            </a>
-          </div>
-          <div className="rounded-2xl border border-[#22396F]/70 bg-ink-950 p-6 md:p-8">
-            <p className="mb-6 font-mono text-[11px] uppercase tracking-widest text-slate-muted">{m.name} · sample signals</p>
-            <div className="space-y-6">
-              {m.bars.map(([l, v]) => (
-                <div key={l}>
-                  <div className="mb-2 flex justify-between text-sm">
-                    <span className="text-bone/90">{l}</span>
-                    <span className="font-mono text-slate-muted">{v}%</span>
-                  </div>
-                  <div className="h-2 overflow-hidden rounded-full bg-[#0D1C42]">
-                    <div className="h-full rounded-full bg-accent transition-all duration-700" style={{ width: `${v}%` }} />
-                  </div>
-                </div>
+          <Reveal className="mt-14">
+            <div role="tablist" aria-label="Platform modules" className="flex flex-wrap gap-2.5">
+              {MODULES.map((x, i) => (
+                <button
+                  key={x.id}
+                  role="tab"
+                  aria-selected={i === active}
+                  onClick={() => setActive(i)}
+                  className={`inline-flex items-center gap-2.5 rounded-full border px-4 py-2 text-sm font-medium transition-all cursor-pointer ${
+                    i === active
+                      ? 'border-accent bg-accent text-ink-950 font-bold shadow-[0_0_20px_-3px_rgba(252,241,208,0.4)]'
+                      : 'border-[#22396F] bg-[#111215]/60 text-slate hover:border-accent hover:text-white'
+                  }`}
+                >
+                  <VideoIcon src={x.video} size="xs" fallback={x.icon} className={i === active ? 'ring-1 ring-accent' : ''} />
+                  <span>{x.name}</span>
+                </button>
               ))}
             </div>
-          </div>
+
+            <div className="card mt-6 grid gap-10 p-8 md:grid-cols-2 md:p-12 border-[#22396F] bg-ink-800" role="tabpanel">
+              <div className="flex flex-col justify-between gap-10">
+                <div>
+                  <VideoIcon src={m.video} size="lg" fallback={Icon} className="shadow-[0_8px_30px_rgba(252,241,208,0.2)]" />
+                  <h3 className="mt-6 text-3xl font-semibold leading-tight tracking-tight text-bone md:text-4xl">{m.title}</h3>
+                  <p className="mt-5 max-w-md leading-relaxed text-slate">{m.body}</p>
+                </div>
+                <a href="#scanner" className="inline-flex items-center gap-2 text-sm font-medium text-accent hover:text-white hover:gap-3 transition-all">
+                  Try it on a real URL <ArrowRight className="h-4 w-4" />
+                </a>
+              </div>
+              <div className="rounded-2xl border border-[#22396F]/70 bg-ink-950 p-6 md:p-8">
+                <p className="mb-6 font-mono text-[11px] uppercase tracking-widest text-slate-muted">{m.name} · sample signals</p>
+                <div className="space-y-6">
+                  {m.bars.map(([l, v]) => (
+                    <div key={l}>
+                      <div className="mb-2 flex justify-between text-sm">
+                        <span className="text-bone/90">{l}</span>
+                        <span className="font-mono text-slate-muted">{v}%</span>
+                      </div>
+                      <div className="h-2 overflow-hidden rounded-full bg-[#0D1C42]">
+                        <div className="h-full rounded-full bg-accent transition-all duration-700" style={{ width: `${v}%` }} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </Reveal>
         </div>
-      </Reveal>
+      </DotsBackground>
     </section>
   );
 }
@@ -175,7 +189,7 @@ const STEPS = [
 
 export function Steps() {
   return (
-    <section id="how" className="border-t border-[#22396F] bg-[#0D1C42]/40 py-28 md:py-36">
+    <section id="how" className="relative overflow-hidden bg-gradient-to-b from-[#17181c] via-[#0D1C42]/30 to-[#17181c] py-28 md:py-36">
       <div className="container-x">
         <Reveal>
           <p className="eyebrow">How it works</p>
@@ -304,16 +318,27 @@ export function Faq() {
 export function Cta() {
   return (
     <section className="container-x pb-24">
-      <Reveal className="relative overflow-hidden rounded-[2.5rem] border border-[#22396F] bg-gradient-to-br from-[#0D1C42] via-[#162754] to-[#22396F] p-10 text-bone shadow-[0_20px_70px_-15px_rgba(1,7,54,0.95)] md:p-20">
-        <div className="relative z-10">
-          <p className="eyebrow mb-4">Enterprise trust</p>
-          <h2 className="h-display max-w-3xl text-[clamp(2.2rem,6vw,5rem)] text-bone font-bold">Web trust, on autopilot.</h2>
-          <p className="mt-6 max-w-xl text-lg text-slate font-medium">Fast to try. Nothing to install. Built for the way real people browse.</p>
-          <div className="mt-10 flex flex-wrap gap-3">
-            <a href="#scanner" className="btn bg-accent px-6 py-3.5 text-base text-[#17181c] font-bold hover:bg-white hover:text-[#17181c] shadow-[0_0_24px_-4px_rgba(252,241,208,0.4)] transition-all">Start a free scan</a>
-            <a href="#report" className="btn border border-[#22396F] px-6 py-3.5 text-base text-bone font-semibold hover:border-accent hover:text-accent transition-all">Report a threat</a>
+      <Reveal className="relative overflow-hidden rounded-[2.5rem] border border-[#22396F] shadow-[0_20px_70px_-15px_rgba(1,7,54,0.95)]">
+        <NetBackground
+          color={0xe8e8e8}
+          backgroundColor={0x15193b}
+          className="p-10 text-bone md:p-20"
+        >
+          {/* Subtle gradient vignette to ensure high contrast */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#111215]/85 via-[#212740]/60 to-transparent z-[1]"
+          />
+          <div className="relative z-10">
+            <p className="eyebrow mb-4">Enterprise trust</p>
+            <h2 className="h-display max-w-3xl text-[clamp(2.2rem,6vw,5rem)] text-bone font-bold">Web trust, on autopilot.</h2>
+            <p className="mt-6 max-w-xl text-lg text-slate font-medium">Fast to try. Nothing to install. Built for the way real people browse.</p>
+            <div className="mt-10 flex flex-wrap gap-4">
+              <Button href="#scanner" variant="primary">Start a free scan</Button>
+              <Button href="#report" variant="ghost">Report a threat</Button>
+            </div>
           </div>
-        </div>
+        </NetBackground>
       </Reveal>
     </section>
   );

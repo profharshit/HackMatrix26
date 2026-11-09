@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Search, Loader2, History, Globe } from 'lucide-react';
 import Reveal from './Reveal';
+import VideoIcon from './VideoIcon';
+import Button from './Button';
+import NetBackground from './NetBackground';
 import { scanUrl, getDomainIntel, saveScanToHistory, getSavedScanHistory, clearScanHistory } from '../services/api';
 import { PRESET_TARGETS } from '../services/mockData';
 
@@ -11,10 +14,10 @@ const VERDICT = {
 };
 
 const MODULES = [
-  ['model', 'AI model'],
-  ['certificate', 'Certificate'],
-  ['web_security', 'Web security'],
-  ['threat_intel', 'Threat intel'],
+  ['model', 'AI model', '/icons/gear-wrench.mp4'],
+  ['certificate', 'Certificate', '/icons/key.mp4'],
+  ['web_security', 'Web security', '/icons/security.mp4'],
+  ['threat_intel', 'Threat intel', '/icons/global-education.mp4'],
 ];
 
 function Gauge({ value, color }) {
@@ -60,18 +63,23 @@ function ScanResult({ scan }) {
       </div>
 
       <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {MODULES.map(([key, label]) => {
+        {MODULES.map(([key, label, video]) => {
           const m = bd[key];
           const s = m?.score;
           const issues = m?.issues || (key === 'threat_intel' ? m?.feeds_hit : []) || [];
           return (
-            <div key={key} className="rounded-2xl border border-[#22396F]/70 bg-ink-950 p-5">
-              <div className="flex items-baseline justify-between">
-                <span className="text-sm text-slate">{label}</span>
-                <span className="font-mono text-lg text-bone font-semibold">{s ?? '—'}</span>
-              </div>
-              <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-[#0D1C42]">
-                <div className="h-full rounded-full" style={{ width: `${s ?? 0}%`, background: v.color }} />
+            <div key={key} className="rounded-2xl border border-[#22396F]/70 bg-ink-950 p-5 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-2.5">
+                    <VideoIcon src={video} size="xs" />
+                    <span className="text-sm font-medium text-slate">{label}</span>
+                  </div>
+                  <span className="font-mono text-lg text-bone font-semibold">{s ?? '—'}</span>
+                </div>
+                <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-[#0D1C42]">
+                  <div className="h-full rounded-full" style={{ width: `${s ?? 0}%`, background: v.color }} />
+                </div>
               </div>
               <ul className="mt-4 space-y-1.5 text-xs text-slate-muted">
                 {s == null ? <li>Check skipped or timed out</li> : issues.slice(0, 3).map((x, i) => <li key={i}>• {x}</li>)}
@@ -122,8 +130,13 @@ export default function Scanner({ online }) {
   };
 
   return (
-    <section id="scanner" className="border-t border-[#22396F] py-28 md:py-36">
-      <div className="container-x">
+    <section id="scanner" className="relative overflow-hidden">
+      <NetBackground
+        color={0xe8e8e8}
+        backgroundColor={0x15193b}
+        className="py-28 md:py-36"
+      >
+        <div className="container-x relative z-10">
         <Reveal>
           <p className="eyebrow">Live scanner</p>
           <h2 className="h-display mt-5 max-w-4xl text-[clamp(2.2rem,6vw,5rem)] text-bone">See what a link is hiding.</h2>
@@ -144,9 +157,9 @@ export default function Scanner({ online }) {
                 className="w-full bg-transparent py-3 text-lg outline-none text-bone placeholder:text-slate-muted"
               />
             </div>
-            <button type="submit" disabled={loading || !url.trim()} className="btn-primary px-8 py-3.5 text-base disabled:opacity-40">
+            <Button type="submit" disabled={loading || !url.trim()} variant="primary" className="!px-8 !py-3.5 !text-base shrink-0">
               {loading ? <><Loader2 className="h-4 w-4 animate-spin" /> Scanning</> : 'Scan'}
-            </button>
+            </Button>
           </form>
 
           <div className="mt-4 flex flex-wrap gap-2">
@@ -169,7 +182,9 @@ export default function Scanner({ online }) {
             <form onSubmit={lookup} className="mt-6 flex gap-2">
               <input value={domain} onChange={(e) => setDomain(e.target.value)} placeholder="example.com" aria-label="Domain"
                 className="min-w-0 flex-1 rounded-full border border-[#22396F] bg-ink-950 px-5 py-3 outline-none focus:border-accent text-bone placeholder:text-slate-muted" />
-              <button className="btn-primary" disabled={intelLoading}>{intelLoading ? '…' : 'Look up'}</button>
+              <Button type="submit" variant="primary" className="!px-6 !py-3 shrink-0" disabled={intelLoading}>
+                {intelLoading ? '…' : 'Look up'}
+              </Button>
             </form>
             {intel && (
               <dl className="mt-6 grid grid-cols-2 gap-4 text-sm">
@@ -211,6 +226,7 @@ export default function Scanner({ online }) {
           </Reveal>
         </div>
       </div>
-    </section>
-  );
+    </NetBackground>
+  </section>
+);
 }
