@@ -54,9 +54,6 @@ export default function HistoryView({ onSelectScan }) {
             <span className="text-[10px] uppercase bg-paper-200 text-navy-950 border border-navy-900 px-2 py-0.5 rounded font-bold">
               OFFLINE AUDIT ARCHIVE // PERSISTENT LOGS
             </span>
-            <span className="text-xs text-grey-500">
-              API: GET /api/scan/&#123;id&#125;
-            </span>
           </div>
           <h2 className="font-display font-bold text-2xl text-navy-900 tracking-tight uppercase">
             Security Audit Logs & Replay Records

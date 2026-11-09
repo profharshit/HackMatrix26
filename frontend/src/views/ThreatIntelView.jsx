@@ -63,9 +63,6 @@ export default function ThreatIntelView({ onOpenReportModal, onAnalyzeUrl }) {
             <span className="font-mono text-[10px] uppercase bg-[#bae6fd] text-blue-950 border border-navy-900 px-2 py-0.5 rounded font-bold">
               CROWDSOURCED DEFENSE NETWORK // COLLABORATIVE FEED
             </span>
-            <span className="text-xs text-grey-500 font-mono">
-              API: /api/report & /api/vote
-            </span>
           </div>
           <h2 className="font-display font-bold text-2xl text-navy-900 tracking-tight uppercase">
             Collaborative Threat Intelligence Feed
@@ -134,7 +131,7 @@ export default function ThreatIntelView({ onOpenReportModal, onAnalyzeUrl }) {
                 No Threat Reports Filed Yet
               </h3>
               <p className="text-xs text-grey-600 max-w-md mx-auto font-sans mt-1 leading-relaxed">
-                The collaborative defense database currently has zero active threat reports filed. When community members or security analysts submit a suspicious domain via POST /api/report, it will appear here for verification.
+                The collaborative defense database currently has zero active threat reports filed. When community members or security analysts submit a suspicious domain, it will appear here for verification.
               </p>
             </div>
             <button

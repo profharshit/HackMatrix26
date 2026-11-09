@@ -60,7 +60,7 @@ export default function ReportModal({ isOpen, onClose, defaultUrl = '', onReport
                 Submit Collaborative Threat Intelligence
               </span>
               <span className="text-[10px] text-grey-500 font-mono">
-                Direct Feed Integration: POST /api/report
+                Direct Feed Integration • Analyst Network
               </span>
             </div>
           </div>

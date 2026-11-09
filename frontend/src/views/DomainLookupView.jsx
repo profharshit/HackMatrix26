@@ -56,9 +56,6 @@ export default function DomainLookupView({ onAnalyzeUrl }) {
               <span className="font-mono text-[10px] uppercase bg-[#e2e8f0] text-navy-950 border border-navy-900 px-2 py-0.5 rounded font-bold">
                 NETWORK & WHOIS TELEMETRY // RECONNAISSANCE
               </span>
-              <span className="text-xs text-grey-500 font-mono">
-                API: GET /api/intel/&#123;domain&#125;
-              </span>
             </div>
             <h2 className="font-display font-bold text-2xl text-navy-900 tracking-tight uppercase">
               Domain Intelligence & WHOIS Reconnaissance
