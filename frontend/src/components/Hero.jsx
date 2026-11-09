@@ -2,6 +2,7 @@ import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import VideoIcon from './VideoIcon';
 import Button from './Button';
+import TopologyBackground from './TopologyBackground';
 
 function Ring({ value, size = 150, stroke = 12 }) {
   const r = (size - stroke) / 2;
@@ -26,27 +27,23 @@ const ROWS = [
 
 export default function Hero() {
   return (
-    <section id="top" className="relative overflow-hidden pt-36 md:pt-44">
-      {/* Luxury sapphire & champagne ambient glow */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -top-40 left-1/2 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-[#22396F]/40 blur-[130px]"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute top-10 left-1/2 h-[280px] w-[500px] -translate-x-1/2 rounded-full bg-accent/10 blur-[100px]"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.06]"
-        style={{
-          backgroundImage: 'linear-gradient(#FCF1D0 1px, transparent 1px), linear-gradient(90deg, #FCF1D0 1px, transparent 1px)',
-          backgroundSize: '56px 56px',
-          maskImage: 'radial-gradient(ellipse at 50% 0%, #000 25%, transparent 75%)',
-          WebkitMaskImage: 'radial-gradient(ellipse at 50% 0%, #000 25%, transparent 75%)',
-        }}
-      />
-      <div className="container-x relative">
+    <section id="top" className="relative overflow-hidden">
+      <TopologyBackground
+        color={0xefefef}
+        backgroundColor={0x232e81}
+        className="pt-36 md:pt-44 pb-20 border-b border-[#22396F]/50"
+      >
+        {/* Soft dark vignettes to preserve contrast and smoothly transition into page */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#17181c]/60 via-transparent to-[#17181c] z-[1]"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute top-10 left-1/2 h-[280px] w-[500px] -translate-x-1/2 rounded-full bg-accent/10 blur-[100px] z-[1]"
+        />
+
+        <div className="container-x relative z-10">
         <p className="eyebrow mb-6">Digital trust intelligence</p>
         <h1 className="h-display max-w-5xl text-[clamp(2.9rem,8.5vw,7.5rem)] text-bone">
           The trust operating system for the web.
@@ -98,6 +95,7 @@ export default function Hero() {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </TopologyBackground>
+  </section>
+);
 }
