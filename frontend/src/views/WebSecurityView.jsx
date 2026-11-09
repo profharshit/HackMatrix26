@@ -1,4 +1,5 @@
 import React from 'react';
+import gearVideo from '../assets/gear.mp4';
 import {
   FileCode2,
   CheckCircle2,
@@ -66,8 +67,15 @@ export default function WebSecurityView({ activeScan }) {
       {/* Overview Banner */}
       <div className="bg-white border-2 border-navy-900 rounded-lg p-6 shadow-brutal flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="flex items-start gap-4">
-          <div className="w-12 h-12 rounded bg-navy-900 text-white flex items-center justify-center flex-shrink-0 font-bold font-mono text-xl shadow-brutal-sm">
-            ⚙️
+          <div className="w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center flex-shrink-0">
+            <video
+              src={gearVideo}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-contain pointer-events-none"
+            />
           </div>
           <div>
             <div className="flex items-center gap-2 mb-1">
@@ -100,8 +108,15 @@ export default function WebSecurityView({ activeScan }) {
 
       {!activeScan || !secDetails ? (
         <div className="bg-white border-2 border-navy-900 rounded-lg p-12 text-center space-y-4 shadow-brutal font-mono">
-          <div className="w-12 h-12 rounded-full border-2 border-navy-900 bg-[#faf9f6] flex items-center justify-center text-xl mx-auto shadow-brutal-sm">
-            ⚙️
+          <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto flex items-center justify-center">
+            <video
+              src={gearVideo}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-contain pointer-events-none"
+            />
           </div>
           <div>
             <h3 className="font-display font-bold text-lg text-navy-900 uppercase">
