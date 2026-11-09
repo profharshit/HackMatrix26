@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import openLockVideo from '../assets/open-lock.mp4';
 import { Lock, Clock, ShieldCheck, LogIn } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { clearScanHistory } from '../services/api';
@@ -42,8 +43,15 @@ export default function HistoryView({ onSelectScan }) {
       {isGuest ? (
         /* Guest Gate: Must sign in to access archive */
         <div className="bg-white border-2 border-navy-900 rounded-lg p-12 text-center space-y-5 shadow-brutal font-mono">
-          <div className="w-16 h-16 rounded-full border-2 border-navy-900 bg-[#faf9f6] flex items-center justify-center text-2xl mx-auto shadow-brutal-sm">
-            🔒
+          <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto flex items-center justify-center">
+            <video
+              src={openLockVideo}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-contain pointer-events-none"
+            />
           </div>
           <div className="space-y-2">
             <span className="font-mono text-[10px] uppercase bg-[#fee2e2] text-red-950 border border-navy-900 px-2 py-0.5 rounded font-bold">
