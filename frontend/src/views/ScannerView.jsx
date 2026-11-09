@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import keyVideo from '../assets/key.mp4';
+import worldwideVideo from '../assets/worldwide.mp4';
 import {
   Search,
   Shield,
@@ -89,7 +90,15 @@ export default function ScannerView({
               title="Cryptographic Key"
             />
             <span title="Trust Shield">🛡️</span>
-            <span title="Network Node">🌐</span>
+            <video
+              src={worldwideVideo}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-5 h-5 object-contain inline-block pointer-events-none"
+              title="Network Node"
+            />
             <span title="Security Radar">📡</span>
           </div>
         </div>
