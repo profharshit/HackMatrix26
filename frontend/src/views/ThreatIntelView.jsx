@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import securityVideo from '../assets/security.mp4';
 import {
   Users,
   AlertTriangle,
@@ -118,8 +119,15 @@ export default function ThreatIntelView({ onOpenReportModal, onAnalyzeUrl }) {
       <div className="space-y-4 font-mono text-xs">
         {filteredReports.length === 0 ? (
           <div className="bg-white border-2 border-navy-900 rounded-lg p-12 text-center space-y-4 shadow-brutal">
-            <div className="w-12 h-12 rounded-full border-2 border-navy-900 bg-[#faf9f6] flex items-center justify-center text-xl mx-auto shadow-brutal-sm">
-              🛡️
+            <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto flex items-center justify-center">
+              <video
+                src={securityVideo}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-contain pointer-events-none"
+              />
             </div>
             <div>
               <h3 className="font-display font-bold text-lg text-navy-900 uppercase">
