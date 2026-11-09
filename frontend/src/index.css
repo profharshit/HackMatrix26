@@ -62,6 +62,11 @@
   }
 }
 
+/* Vanta.NET canvas soft blur and atmospheric glow */
+.net-background canvas {
+  filter: blur(1px) drop-shadow(0 0 6px rgba(232, 232, 232, 0.45));
+}
+
 /* From Uiverse.io by doniaskima */
 .btn-17,
 .btn-17 *,

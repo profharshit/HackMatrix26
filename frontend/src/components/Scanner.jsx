@@ -130,17 +130,12 @@ export default function Scanner({ online }) {
   };
 
   return (
-    <section id="scanner" className="border-t border-[#22396F] overflow-hidden">
+    <section id="scanner" className="relative overflow-hidden">
       <NetBackground
         color={0xe8e8e8}
         backgroundColor={0x15193b}
         className="py-28 md:py-36"
       >
-        {/* Soft edge blend for smooth section transition */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#17181c]/80 via-transparent to-[#17181c]/80 z-[1]"
-        />
         <div className="container-x relative z-10">
         <Reveal>
           <p className="eyebrow">Live scanner</p>

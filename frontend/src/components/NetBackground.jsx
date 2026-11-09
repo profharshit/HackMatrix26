@@ -69,8 +69,21 @@ export default function NetBackground({
   return (
     <div
       ref={vantaRef}
-      className={`relative w-full overflow-hidden ${className}`}
+      className={`net-background relative w-full overflow-hidden ${className}`}
+      style={{
+        maskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)',
+        WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)',
+      }}
     >
+      {/* Seamless top & bottom blurred gradient feathering */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-[#17181c] via-[#17181c]/70 to-transparent z-[1] backdrop-blur-[2px]"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-[#17181c] via-[#17181c]/70 to-transparent z-[1] backdrop-blur-[2px]"
+      />
       {children}
     </div>
   );
