@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import keyIcon from '../assets/key-icon.png';
 import {
   Search,
   Shield,
@@ -78,7 +79,7 @@ export default function ScannerView({
           </div>
 
           <div className="hidden sm:flex items-center gap-3 text-lg select-none text-navy-900 font-mono">
-            <span title="Cryptographic Key">🔑</span>
+            <img src={keyIcon} alt="Key" className="w-5 h-5 object-contain inline-block" title="Cryptographic Key" />
             <span title="Trust Shield">🛡️</span>
             <span title="Network Node">🌐</span>
             <span title="Security Radar">📡</span>

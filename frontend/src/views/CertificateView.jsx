@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import keyIcon from '../assets/key-icon.png';
 import {
   KeyRound,
   ShieldAlert,
@@ -23,8 +24,8 @@ export default function CertificateView({ activeScan }) {
       {/* Incident Case Study Spotlight Card */}
       <div className="bg-white border-2 border-navy-900 rounded-lg p-6 shadow-brutal">
         <div className="flex flex-col sm:flex-row items-start gap-4">
-          <div className="w-12 h-12 rounded bg-navy-900 text-white flex items-center justify-center flex-shrink-0 font-bold font-mono text-xl shadow-brutal-sm">
-            🔑
+          <div className="w-12 h-12 rounded bg-navy-900 flex items-center justify-center flex-shrink-0 shadow-brutal-sm p-2">
+            <img src={keyIcon} alt="Certificate Key" className="w-full h-full object-contain" />
           </div>
           <div className="space-y-1">
             <div className="flex flex-wrap items-center gap-2">
@@ -47,8 +48,8 @@ export default function CertificateView({ activeScan }) {
 
       {!activeScan || !certData ? (
         <div className="bg-white border-2 border-navy-900 rounded-lg p-12 text-center space-y-4 shadow-brutal font-mono">
-          <div className="w-12 h-12 rounded-full border-2 border-navy-900 bg-[#faf9f6] flex items-center justify-center text-xl mx-auto shadow-brutal-sm">
-            🔑
+          <div className="w-14 h-14 rounded-full border-2 border-navy-900 bg-white flex items-center justify-center p-2.5 mx-auto shadow-brutal-sm">
+            <img src={keyIcon} alt="Certificate Key" className="w-full h-full object-contain" />
           </div>
           <div>
             <h3 className="font-display font-bold text-lg text-navy-900 uppercase">
