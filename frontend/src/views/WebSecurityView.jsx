@@ -1,5 +1,6 @@
 import React from 'react';
 import gearVideo from '../assets/gear.mp4';
+import gearWrenchVideo from '../assets/gear-wrench.mp4';
 import {
   FileCode2,
   CheckCircle2,
@@ -108,9 +109,9 @@ export default function WebSecurityView({ activeScan }) {
 
       {!activeScan || !secDetails ? (
         <div className="bg-white border-2 border-navy-900 rounded-lg p-12 text-center space-y-4 shadow-brutal font-mono">
-          <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto flex items-center justify-center">
+          <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto flex items-center justify-center">
             <video
-              src={gearVideo}
+              src={gearWrenchVideo}
               autoPlay
               loop
               muted
