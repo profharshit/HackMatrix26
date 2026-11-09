@@ -12,16 +12,19 @@ export default function ReportForm() {
   const set = (k) => (e) => setF({ ...f, [k]: e.target.value });
 
   const submit = async (e) => {
-    e.preventDefault();
-    setState({ busy: true, msg: '' });
-    try {
-      const res = await submitThreatReport(f);
-      setState({ busy: false, msg: res.message || 'Report submitted. Thank you.' });
-      setF({ url: '', category: CATEGORIES[0], targetBrand: '', comment: '' });
-    } catch {
-      setState({ busy: false, msg: 'Could not submit the report. Please try again.' });
-    }
-  };
+  e.preventDefault();
+  setState({ busy: true, msg: '' });
+  try {
+    const res = await submitThreatReport(f);
+    const message = res.duplicate
+      ? 'This link was already reported in the last 24 hours. Thank you.'
+      : res.message || 'Report submitted. Thank you.';
+    setState({ busy: false, msg: message });
+    setF({ url: '', category: CATEGORIES[0], targetBrand: '', comment: '' });
+  } catch (error) {
+    setState({ busy: false, msg: error.message || 'Could not submit the report. Please try again.' });
+  }
+};
 
   const input = 'w-full rounded-2xl border border-[#22396F] bg-[#111215] px-5 py-3.5 outline-none text-bone placeholder:text-slate-muted focus:border-accent transition-colors';
 

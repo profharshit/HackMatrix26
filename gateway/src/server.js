@@ -6,8 +6,11 @@ const { openDatabase } = require("./db");
 const { createIntelRouter } = require("./routes/intel");
 const scanRoutes = require("./routes/scan");
 
-const port = 4000;
-const allowedOrigins = ["http://localhost:5173", "http://localhost:3000"];
+const port = Number(process.env.PORT) || 4000;
+const defaultOrigins = "http://localhost:5173,http://localhost:3000";
+const allowedOrigins = (process.env.ALLOWED_ORIGINS || defaultOrigins)
+  .split(",")
+  .map((origin) => origin.trim());
 
 // Returns a clear JSON error instead of an HTML crash page.
 function handleErrors(error, request, response, next) {
@@ -21,6 +24,8 @@ function handleErrors(error, request, response, next) {
 // Builds the app with security middleware first, then the routes.
 function createApp(database) {
   const app = express();
+  // Behind Render/Railway every request looks like one IP unless we trust the proxy header.
+  app.set("trust proxy", 1);
   app.use(helmet());
   app.use(cors({ origin: allowedOrigins }));
   app.use(express.json({ limit: "10kb" }));
@@ -35,7 +40,7 @@ function createApp(database) {
 // Starts listening so the frontend can reach the gateway.
 function startServer() {
   const app = createApp(openDatabase());
-  app.listen(port, () => console.log(`Gateway running on http://localhost:${port}`));
+  app.listen(port, () => console.log(`Gateway running on port ${port}`));
 }
 
 startServer();

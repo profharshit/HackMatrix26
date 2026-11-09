@@ -9,9 +9,9 @@ from app.config import MODEL_FILE_PATH
 from app.modules.url_features import extract_url_features
 
 SUSPICIOUS_WORDS = ("login", "verify", "secure", "account", "update", "bank", "paypal")
+# PhiUSIIL dataset coding: 0 = phishing, 1 = legitimate. Set to 1 if your notebook flipped it.
+PHISHING_CLASS_LABEL = 0
 logger = logging.getLogger(__name__)
-modelState = {"isLoaded": False, "model": None}
-
 
 # Explains a scikit-learn version clash in words a beginner can act on
 def build_version_mismatch_message(warning):
@@ -70,13 +70,22 @@ def pick_label(trustScore):
     return "legitimate"
 
 
-# Asks the real model; class 1 means phishing in the training notebook
+# Finds which probability column means phishing, because the label coding depends on the dataset
+def find_phishing_column(pipeline):
+    classLabels = list(pipeline.classes_)
+    return classLabels.index(PHISHING_CLASS_LABEL)
+
+
+# Asks the real model and reads the phishing column by its class label, not by position
 def score_with_model(modelBundle, url):
+    pipeline = modelBundle["pipeline"]
     featureRow = build_feature_row(modelBundle["features"], url)
-    phishingChance = float(modelBundle["pipeline"].predict_proba(featureRow)[0][1])
+    phishingColumn = find_phishing_column(pipeline)
+    phishingChance = float(pipeline.predict_proba(featureRow)[0][phishingColumn])
     trustScore = round((1 - phishingChance) * 100)
     confidence = round(max(phishingChance, 1 - phishingChance), 2)
     return {"score": trustScore, "label": pick_label(trustScore), "confidence": confidence, "source": "model"}
+
 
 # A word list check keeps the backup rules simple and easy to explain
 def has_suspicious_word(url):

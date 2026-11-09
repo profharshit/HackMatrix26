@@ -47,9 +47,16 @@ function ScanResult({ scan }) {
       <div className="grid items-center gap-10 md:grid-cols-[auto_1fr]">
         <div className="mx-auto"><Gauge value={scan.trust_score ?? 0} color={v.color} /></div>
         <div>
-          <span className="inline-block rounded-full px-3 py-1 font-mono text-xs uppercase tracking-widest font-bold" style={{ background: `${v.color}22`, color: v.color }}>
+          <div className="flex flex-wrap items-center gap-2">
+           <span className="inline-block rounded-full px-3 py-1 font-mono text-xs uppercase tracking-widest font-bold" style={{ background: `${v.color}22`, color: v.color }}>
             {v.label}
-          </span>
+           </span>
+            {scan.isDemo && (
+              <span title={scan.demo_reason} className="rounded-full border border-warn px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-warn">
+              Demo
+              </span>
+           )}
+        </div>
           <p className="mt-4 break-all font-mono text-sm text-slate">{scan.url}</p>
           <ul className="mt-6 space-y-2.5">
             {(scan.reasons || []).map((r, i) => (
@@ -192,6 +199,7 @@ export default function Scanner({ online }) {
                   ['Domain', intel.domain], ['Trust score', intel.trust_score], ['Verdict', intel.verdict],
                   ['Reports', intel.reports], ['Feeds hit', (intel.feeds_hit || []).length],
                   ['Cert issuer', intel.certificate_issuer],
+                  ['Votes (up/down)', `${intel.upvotes ?? 0} / ${intel.downvotes ?? 0}`],
                 ].map(([k, val]) => (
                   <div key={k} className="rounded-xl border border-[#22396F]/70 bg-ink-950 p-3">
                     <dt className="font-mono text-[10px] uppercase tracking-widest text-slate-muted">{k}</dt>

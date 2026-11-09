@@ -8,9 +8,10 @@ const express = require("express");
 
 const router = express.Router();
 
-const FASTAPI_BASE_URL = process.env.FASTAPI_URL || "http://localhost:8000";
-// A scan runs four checks in parallel at up to 5 seconds each, so allow some extra time
-const SCAN_TIMEOUT_MS = 15000;
+// IPv4 pin kiya, kyunki Node 20 me "localhost" kabhi ::1 pe jaata hai aur uvicorn 127.0.0.1 pe sunta hai
+const FASTAPI_BASE_URL = process.env.FASTAPI_URL || "http://127.0.0.1:8000";
+// FastAPI khud 5s pe cut karta hai, toh gateway 12s pe rukta hai, frontend ke 15s se pehle
+const SCAN_TIMEOUT_MS = 12000;
 const MAX_URL_LENGTH = 2048;
 
 // Rejects empty or oversized input here so FastAPI never sees obvious junk

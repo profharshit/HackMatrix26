@@ -1,7 +1,8 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
-from app.orchestrator import scan_url
+from app.modules.safe_target import points_to_private_address
+from app.orchestrator import extract_domain, scan_url
 
 router = APIRouter(prefix="/api")
 saved_scans = {}
@@ -14,9 +15,12 @@ class ScanRequest(BaseModel):
 # Runs a full scan and keeps the result so the frontend can reopen it by id
 @router.post("/scan")
 def create_scan(request: ScanRequest):
-    if not request.url.strip():
+    targetUrl = request.url.strip()
+    if not targetUrl:
         raise HTTPException(status_code=422, detail="url must not be empty")
-    result = scan_url(request.url.strip())
+    if points_to_private_address(extract_domain(targetUrl)):
+        raise HTTPException(status_code=400, detail="url must point to a public website")
+    result = scan_url(targetUrl)
     saved_scans[result["id"]] = result
     return result
 
